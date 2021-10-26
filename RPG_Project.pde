@@ -31,13 +31,14 @@ color Mauve = #645356;
 color Red = #E53B0A;
 color Yellow = #E7B855;
 color Black = #000000;
+color White = #FFFFFF;
 
 //FONTS
 PFont USA, USR;
 
 //IMAGES
 PImage map;
-//color northRoom, eastRoom, southRoom, westRoom;
+color northRoom, eastRoom, southRoom, westRoom;
 
 //OBJECTS
 //ArrayList <DarknessCell> darkness;
@@ -55,6 +56,9 @@ void setup() {
   //Fonts
   USA = createFont("UnfinishedScreamAlternative.ttf", 50);
   USR = createFont("UnfinishedScreamRegular.ttf", 50);
+  
+  //Images
+  map =  loadImage("New Piskel.png");
   
 
 
