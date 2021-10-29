@@ -41,15 +41,27 @@ class Hero extends GameObject {
 
     //Check exits
     //north
-    if (northRoom != White && loc.y == height*0.1 && loc.x >= width/2-50 && loc.x <= width/2+50) {
-      println("work");
-      roomY--;
-      loc = new PVector(width/2, height*0.9-10);
+    if (northRoom != White && loc.y <= height*0.139 && loc.x >= width/2-50 && loc.x <= width/2+50) {
+      roomY = roomY - 1;
+      loc = new PVector(width/2, height*0.87-10);
     }
 
     //east
-    if (eastRoom != White && loc.x == width*0.9 && loc.x >= width/2-50 && loc.x <= width/2+50) {
-      
+    else if (eastRoom != White && loc.x >= width*0.86 && loc.y >= height/2-50 && loc.y <= height/2+50) {
+      roomX = roomX+1;
+      loc = new PVector(width*0.2, height/2);
     }
+
+    //south
+    else if (southRoom != White && loc.y >= height*0.86 && loc.x >= width/2-50 && loc.x <= width/2+50) {
+      roomY = roomY+1; 
+      loc = new PVector(width/2, height*0.19-10);
+    }
+
+    //west
+    else if (westRoom != White && loc.x <= width*0.139 && loc.y >= height/2-50 && loc.y <= height/2+50) {
+      roomX = roomX-1;
+      loc = new PVector(width*0.85, height/2);
     }
   }
+}

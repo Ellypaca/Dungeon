@@ -1,10 +1,11 @@
-void intro(){
+void intro() {
   background(Dark);
-  
-  textSize(50);
+
+  textFont(USA);
+  textSize(100);
   text("Intro Screen", width/2, 200);
-  
-  
+
+
 
 
   //BUTTON STUFF====================================
@@ -13,5 +14,4 @@ void intro(){
     mouseReleased = true;
     hadPressed = false;
   } else if (mouseReleased) mouseReleased = false;
-  
 }

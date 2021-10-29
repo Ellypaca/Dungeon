@@ -1,8 +1,12 @@
 void game() {
+  frameRate(50);
   drawRoom();
   drawGameObjects();
   drawLightLayer();
   drawMiniMap();
+
+  //Pause/menu button
+  drawPause();
 }
 
 
@@ -19,16 +23,18 @@ void drawRoom() {
 
   //draw exits
   //1: find out which directions have exits
-  northRoom = map.get(myHero.roomX, myHero.roomY-10);
-  eastRoom = map.get(myHero.roomX+10, myHero.roomY);
-  southRoom = map.get(myHero.roomX, myHero.roomY+10);
-  westRoom = map.get(myHero.roomX-10, myHero.roomY);
+  northRoom = map.get(myHero.roomX, myHero.roomY-1);
+  eastRoom = map.get(myHero.roomX+1, myHero.roomY);
+  southRoom = map.get(myHero.roomX, myHero.roomY+1);
+  westRoom = map.get(myHero.roomX-1, myHero.roomY);
 
   //2: draw
   noStroke();
   fill(Black);
   if (northRoom != White) {
     ellipse(width/2, height*0.1, 100, 100);
+    image(torch, width/2-58, height*0.05, 50, 50);
+    image(torch, width/2+58, height*0.05, 50, 50);
   }
 
   if (eastRoom != White) {
@@ -45,34 +51,60 @@ void drawRoom() {
 
   //floor
   fill(Gray);
-  rect(width/2, height/2, width*0.8, height*0.8);
+  rect(width/2, height/2, width*0.8, height*0.8);    //640 and 480
 
   //image
 
-  image(map, 100, 100, 100, 100);
   fill(Mauve);
-  //square(myHero.roomX+10, myHero.roomY+10, 10);
 }
 
+
 void drawGameObjects() {
-  //for (int i = 0; i < myObjects.size(); i++; ) {
-  int i = 0;
-  while (i < myObjects.size()) {
+  for (int i = 0; i < myObjects.size(); i++ ) {
     GameObject myObj = myObjects.get(i);
     myObj.show();
     myObj.act();
     if (myObj.hp <=0) {
       myObjects.remove(i);
-    } else {
-      i++;
+      i--;
     }
   }
 }
 
 
 void drawLightLayer() {
+  for (int i = 0; i < darkness.size(); i++) {
+    DarknessCell myDark =  darkness.get(i);
+    myDark.show();
+  }
 }
 
 
 void drawMiniMap() {
+  rectMode(CORNER);
+  //image(map, 100, 100, 100, 100);
+  int x = 50;
+  int y = 50;
+  for (int i = 0; i<100; i++){
+    
+    switch (x){
+       
+    }
+    
+    fill(255);
+    
+    
+    square(x, y, 10);
+    x=x+10;
+   
+    
+    if (x >=150){
+      x = 50;
+      y = y+10;
+    }
+  }
+  rectMode(CENTER);
+}
+
+void drawPause() {
 }
