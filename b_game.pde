@@ -85,20 +85,85 @@ void drawMiniMap() {
   //image(map, 100, 100, 100, 100);
   int x = 50;
   int y = 50;
-  for (int i = 0; i<100; i++){
-    
-    switch (x){
-       
+  for (int i = 0; i<100; i++) {
+    fill(0);
+
+
+
+    switch (x) {
+    case 50:
+      fill(255);
+      break;
+
+    case 60:
+      if (y == 90 || y == 100)fill(255);
+      break;
+
+    case 80:
+      if (y == 90 || y == 100)fill(255);
+      break;
+
+    case 90:
+      if (y >= 80 && y <=110) fill(255);
+      break;
+
+    case 100:
+      if (y >= 80 && y <=110) fill(255);
+      break;
+
+
+    case 110:
+      if (y == 90 || y == 100)fill(255);
+      break;
+
+    case 130:
+      if (y == 90 || y == 100)fill(255);
+      break;
+
+
+    case 140:
+      fill(255);
+      break;
+    }
+
+    switch (y) {
+    case 50:
+      fill(255);
+      break;
+
+    case 60:
+      if (x == 90 || x == 100) fill(255);
+      break;
+
+    case 70:
+      if (x == 70 || x == 120) fill(255);
+      break;
+
+    case 120:
+      if (x == 70 || x == 120) fill(255);
+      break;
+
+    case 130:
+      if (x == 90 || x == 100) fill(255);
+      break;
+
+
+    case 140:
+      fill(255);
+      break;
     }
     
-    fill(255);
-    
-    
+    // if (myHero.roomX*10+50 == 60 && myHero.roomY*10+50 == 60){
+    //  fill(80, 27, 100);
+    //}
+
+
+
     square(x, y, 10);
     x=x+10;
-   
-    
-    if (x >=150){
+
+
+    if (x >=150) {
       x = 50;
       y = y+10;
     }

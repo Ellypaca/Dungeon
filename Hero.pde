@@ -63,5 +63,7 @@ class Hero extends GameObject {
       roomX = roomX-1;
       loc = new PVector(width*0.85, height/2);
     }
+    
+    println(roomX+roomY);
   }
 }
