@@ -67,7 +67,7 @@ void setup() {
   //Fonts
   USA = createFont("UnfinishedScreamAlternative.ttf", 50);
   USR = createFont("UnfinishedScreamRegular.ttf", 50);
-  
+
   //Buttons
   PauseButton = new Button("Click here to resume", width/2, 300, 300, 100, Black, White );
 
@@ -86,20 +86,19 @@ void setup() {
 
 
   //Create Darkness
+  float size = 10.0;
   darkness = new ArrayList<DarknessCell>(1000);
   rectMode(CORNER);
-  float size = 10.0;
   float x = 0.0, y = 0.0; 
   for (int i = 0; i<(width*height)/size; i++) {
     darkness.add(new DarknessCell(x, y, size));
     x = x + size;
-    if (x >= 800) {
+    if (x >= width) {
       x = 0;
       y = y + size;
     }
   }
   rectMode(CENTER);
-
 
 
   mode = INTRO;

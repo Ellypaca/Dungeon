@@ -83,91 +83,23 @@ void drawLightLayer() {
 void drawMiniMap() {
   rectMode(CORNER);
   //image(map, 100, 100, 100, 100);
-  int x = 50;
-  int y = 50;
-  for (int i = 0; i<100; i++) {
-    fill(0);
+  int x = 0;
+  int y = 0;
+  float size = 10 ;
+  while (y < map.height) {
+    color c  = map.get(x, y);
+    fill(c);
+    square(50+x*10, 50+y*10, size);
+    x = x+1;
 
-
-
-    switch (x) {
-    case 50:
-      fill(255);
-      break;
-
-    case 60:
-      if (y == 90 || y == 100)fill(255);
-      break;
-
-    case 80:
-      if (y == 90 || y == 100)fill(255);
-      break;
-
-    case 90:
-      if (y >= 80 && y <=110) fill(255);
-      break;
-
-    case 100:
-      if (y >= 80 && y <=110) fill(255);
-      break;
-
-
-    case 110:
-      if (y == 90 || y == 100)fill(255);
-      break;
-
-    case 130:
-      if (y == 90 || y == 100)fill(255);
-      break;
-
-
-    case 140:
-      fill(255);
-      break;
-    }
-
-    switch (y) {
-    case 50:
-      fill(255);
-      break;
-
-    case 60:
-      if (x == 90 || x == 100) fill(255);
-      break;
-
-    case 70:
-      if (x == 70 || x == 120) fill(255);
-      break;
-
-    case 120:
-      if (x == 70 || x == 120) fill(255);
-      break;
-
-    case 130:
-      if (x == 90 || x == 100) fill(255);
-      break;
-
-
-    case 140:
-      fill(255);
-      break;
-    }
-    
-    // if (myHero.roomX*10+50 == 60 && myHero.roomY*10+50 == 60){
-    //  fill(80, 27, 100);
-    //}
-
-
-
-    square(x, y, 10);
-    x=x+10;
-
-
-    if (x >=150) {
-      x = 50;
-      y = y+10;
+    if (x >= map.width) {
+      x= 0;
+      y= y+1;
     }
   }
+
+  fill(#FAE630);
+  square(50+myHero.roomX*10, 50+myHero.roomY*10, 10);
   rectMode(CENTER);
 }
 

@@ -22,7 +22,4 @@ class DarknessCell{
     square(x, y, size);
   }
   
-  
-  
-  
 }
