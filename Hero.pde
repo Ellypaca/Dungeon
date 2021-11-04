@@ -1,6 +1,9 @@
 class Hero extends GameObject {
   int roomX, roomY;
   float speed;
+  PVector direction;
+
+  Weapon myWeapon;
 
   Hero() {
     super();
@@ -8,6 +11,10 @@ class Hero extends GameObject {
     roomX = 1;
     roomY = 1;
     size = 40.0;
+    myWeapon = new Weapon();
+    direction = new PVector(0, -0.1);
+
+    //ArrayList<Weapon> Weapons;
   }
 
   void show() {
@@ -63,6 +70,10 @@ class Hero extends GameObject {
       roomX = roomX-1;
       loc = new PVector(width*0.85, height/2);
     }
-    
+
+    myWeapon.update();
+    if (spacekey) {
+      myWeapon.shoot();
+    }
   }
 }

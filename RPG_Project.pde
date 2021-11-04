@@ -24,7 +24,7 @@ Button UnpauseButton;
 
 
 //CONTROLS
-boolean wkey, akey, skey, dkey;
+boolean wkey, akey, skey, dkey, spacekey;
 
 //COLOURS
 //https://www.colourlovers.com/palette/3115147/Caved_In
@@ -49,7 +49,6 @@ PImage torch;
 //OBJECTS
 ArrayList<GameObject> myObjects;
 Hero myHero;
-
 
 //DARKNESS
 ArrayList <DarknessCell> darkness;
@@ -76,7 +75,6 @@ void setup() {
 
   //Sprites
   torch = loadImage("SmallTorch.png");
-
 
   //Create Objects
   myHero = new Hero();
