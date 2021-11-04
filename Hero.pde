@@ -15,12 +15,12 @@ class Hero extends GameObject {
     direction = new PVector(0, -0.1);
 
     //ArrayList<Weapon> Weapons;
+    //myWeapon = new Bow();
   }
 
   void show() {
     fill(Mauve);
-    stroke(Black);
-    strokeWeight(2);
+    noStroke();
     circle(loc.x, loc.y, size);
   }
 
@@ -73,6 +73,7 @@ class Hero extends GameObject {
 
     myWeapon.update();
     if (spacekey) {
+      myWeapon.show();
       myWeapon.shoot();
     }
   }

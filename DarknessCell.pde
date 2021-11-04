@@ -12,7 +12,7 @@ class DarknessCell{
   
   void show(){
     d = dist(myHero.loc.x, myHero.loc.y, x, y);
-    opacity = map(d, 0.0, 200.0, 0, 140);
+    opacity = map(d, 0.0, 200.0, -20, 140);
     
     
     

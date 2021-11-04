@@ -91,7 +91,7 @@ void setup() {
   for (int i = 0; i<(width*height)/size; i++) {
     darkness.add(new DarknessCell(x, y, size));
     x = x + size;
-    if (x >= width) {
+    if (x >= width+size) {
       x = 0;
       y = y + size;
     }

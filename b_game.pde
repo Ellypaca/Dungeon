@@ -51,6 +51,8 @@ void drawRoom() {
 
   //floor
   fill(Gray);
+  strokeWeight(4);
+  stroke(Black);
   rect(width/2, height/2, width*0.8, height*0.8);    //640 and 480
 
   //image
