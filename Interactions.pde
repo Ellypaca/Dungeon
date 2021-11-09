@@ -14,6 +14,8 @@ void keyPressed() {
   if (key == ' '){
   spacekey = true;
   }
+ //   if (keyCode == 'SHIFT') shiftkey = true;
+
 }
 
 void keyReleased() {
@@ -30,4 +32,5 @@ void keyReleased() {
   if (key == 'A' || key == 'a') akey = false;
   if (key == 'D' || key == 'd') dkey = false;
   if (key == ' ') spacekey = false;
+ // if (keyCode == 'SHIFT') shiftkey = false;
 }

@@ -2,11 +2,14 @@ void game() {
   frameRate(50);
   drawRoom();
   drawGameObjects();
-  drawLightLayer();
+//  drawLightLayer();
   drawMiniMap();
 
   //Pause/menu button
   drawPause();
+
+
+  ////testing
 }
 
 
@@ -22,7 +25,7 @@ void drawRoom() {
   line(width, 0, 0, height);
 
   //draw exits
-  //1: find out which directions have exits
+  //1: find out which ss have exits
   northRoom = map.get(myHero.roomX, myHero.roomY-1);
   eastRoom = map.get(myHero.roomX+1, myHero.roomY);
   southRoom = map.get(myHero.roomX, myHero.roomY+1);
@@ -64,11 +67,14 @@ void drawRoom() {
 void drawGameObjects() {
   for (int i = 0; i < myObjects.size(); i++ ) {
     GameObject myObj = myObjects.get(i);
-    myObj.show();
-    myObj.act();
-    if (myObj.hp <=0) {
-      myObjects.remove(i);
-      i--;
+    if (myObj.roomX == myHero.roomX && myObj.roomY == myHero.roomY) {
+
+      myObj.show();
+      myObj.act();
+      if (myObj.hp <=0) {
+        myObjects.remove(i);
+        i--;
+      }
     }
   }
 }

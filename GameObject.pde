@@ -2,10 +2,7 @@ class GameObject {
   PVector loc; //location
   PVector vel; //velocity
   float size;
-  int shotTimer, threshold;
-  int bulletSpeed;
-  
-
+  int roomX, roomY;
 
   int hp, shield;
 

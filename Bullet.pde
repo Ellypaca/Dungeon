@@ -2,26 +2,27 @@ class Bullet extends GameObject {
   int stroke;
   PVector nudge;
   PVector aimVector;
-  PVector loc;
   color colour;
+  int damage;
 
   Bullet() {
 
     hp = 1;
     stroke = #FFFCFD;
-    
   }
 
   Bullet(float x, float y, PVector a, int c, int s) {
-    loc = new PVector(x, y);
+    loc = myHero.loc.copy();
     aimVector = a;
     size = s;
     colour = c;
-    
-    nudge =  aimVector.copy();
-    nudge.rotate(PI);
-    nudge.setMag(-30);
-    loc.add (nudge);
+
+    vel =  aimVector.copy();
+    //nudge.rotate(PI);
+    //nudge.setMag(-30);
+    loc.add (vel);
+    roomX = myHero.roomX;
+    roomY = myHero.roomY;
   }
 
   void show() {
@@ -31,8 +32,12 @@ class Bullet extends GameObject {
   }
 
   void act() {
-    super.act();
+    //super.act();
     loc.add(aimVector);
+    
+    //temp
+
+
 
 
     if ( loc.y > height*0.9-size/2) hp = 0;

@@ -1,9 +1,9 @@
 class Hero extends GameObject {
-  int roomX, roomY;
   float speed;
   PVector direction;
 
   Weapon myWeapon;
+  Weapon Fast;
 
   Hero() {
     super();
@@ -11,7 +11,9 @@ class Hero extends GameObject {
     roomX = 1;
     roomY = 1;
     size = 40.0;
-    myWeapon = new Weapon();
+    myWeapon = new Bow();
+
+
     direction = new PVector(0, -0.1);
 
     //ArrayList<Weapon> Weapons;

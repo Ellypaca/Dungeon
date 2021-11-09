@@ -1,3 +1,4 @@
+
 //Katelynn Bai
 //RPG Game
 //Oct 20, 2021
@@ -24,7 +25,7 @@ Button UnpauseButton;
 
 
 //CONTROLS
-boolean wkey, akey, skey, dkey, spacekey;
+boolean wkey, akey, skey, dkey, spacekey, qkey, ekey, shiftkey;
 
 //COLOURS
 //https://www.colourlovers.com/palette/3115147/Caved_In
@@ -35,6 +36,7 @@ color Red = #E53B0A;
 color Yellow = #E7B855;
 color Black = #000000;
 color White = #FFFFFF;
+color Green = #76B26E;
 
 //FONTS
 PFont USA, USR;
@@ -53,6 +55,11 @@ Hero myHero;
 //DARKNESS
 ArrayList <DarknessCell> darkness;
 DarknessCell myDark;
+
+//testing
+float acc; 
+
+
 
 
 void setup() {
@@ -81,6 +88,8 @@ void setup() {
   myObjects = new ArrayList<GameObject>(1000);
   myObjects.add(myHero);
 
+  myObjects.add(new Enemy());
+
 
 
   //Create Darkness
@@ -97,7 +106,9 @@ void setup() {
     }
   }
   rectMode(CENTER);
-
+   
+   
+   //test
 
   mode = INTRO;
 }
