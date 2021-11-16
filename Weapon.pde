@@ -44,7 +44,7 @@ class Weapon {
 
 class Bow extends Weapon {
   Bow() {
-    super(40, 2);
+    super(30, 35);
   }
 
   void shoot() {
@@ -59,7 +59,7 @@ class Bow extends Weapon {
 
 class Mage extends Weapon {
   Mage() {
-    super(10, 3);
+    super(6, 2);
   }
 
   void shoot() {
@@ -68,9 +68,58 @@ class Mage extends Weapon {
         aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
         aimVector.rotate(random(-0.5, 0.5));
         aimVector.setMag(bulletSpeed);
-        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, 10));
+        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, 20));
         shotTimer = 0;
       }
     }
+  }
+}
+
+
+//class Sword extends Weapon {
+//  Sword(){
+//   super() 
+//  }
+
+
+
+//}
+
+class AOE extends Weapon {
+  int r;
+
+  AOE() {
+    super(20, 2);
+    r = -10;
+  }
+
+  void shoot() {
+    if (shotTimer >= threshold ) {
+
+      for (int i = 0; i<15; i++) {
+        aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
+        aimVector.rotate(radians(r));
+        r = r+24;
+        aimVector.setMag(bulletSpeed);
+        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, 20));
+      }
+
+      shotTimer = 0;
+    }
+  }
+}
+
+
+
+
+
+
+class LB extends Weapon { //literally leblanc
+
+
+  LB() {
+  }
+
+  void shoot() {
   }
 }

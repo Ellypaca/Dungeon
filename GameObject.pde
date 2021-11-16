@@ -3,6 +3,8 @@ class GameObject {
   PVector vel; //velocity
   float size;
   int roomX, roomY;
+  boolean ally;
+
 
   int hp, shield;
 

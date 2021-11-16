@@ -2,8 +2,9 @@ void game() {
   frameRate(50);
   drawRoom();
   drawGameObjects();
-//  drawLightLayer();
+  // drawLightLayer();
   drawMiniMap();
+  drawInterface();
 
   //Pause/menu button
   drawPause();
@@ -59,7 +60,6 @@ void drawRoom() {
   rect(width/2, height/2, width*0.8, height*0.8);    //640 and 480
 
   //image
-
   fill(Mauve);
 }
 
@@ -94,6 +94,7 @@ void drawMiniMap() {
   int x = 0;
   int y = 0;
   float size = 10 ;
+  noStroke();
   while (y < map.height) {
     color c  = map.get(x, y);
     fill(c);
@@ -112,4 +113,12 @@ void drawMiniMap() {
 }
 
 void drawPause() {
+}
+
+
+
+void drawInterface() {
+  fill(White);
+  textSize(60);
+  text("HP:"+ myHero.hp, 100, 500);
 }

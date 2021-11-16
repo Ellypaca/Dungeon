@@ -30,6 +30,7 @@ boolean wkey, akey, skey, dkey, spacekey, qkey, ekey, shiftkey;
 //COLOURS
 //https://www.colourlovers.com/palette/3115147/Caved_In
 color Gray = #A09D86;
+color Greyer = #8F938E;
 color Dark = #2C151E;
 color Mauve = #645356;
 color Red = #E53B0A;
@@ -37,6 +38,7 @@ color Yellow = #E7B855;
 color Black = #000000;
 color White = #FFFFFF;
 color Green = #76B26E;
+color Gold = #F7C90C;
 
 //FONTS
 PFont USA, USR;
@@ -51,6 +53,7 @@ PImage torch;
 //OBJECTS
 ArrayList<GameObject> myObjects;
 Hero myHero;
+
 
 //DARKNESS
 ArrayList <DarknessCell> darkness;
@@ -78,7 +81,7 @@ void setup() {
   PauseButton = new Button("Click here to resume", width/2, 300, 300, 100, Black, White );
 
   //Images
-  map =  loadImage("Map.png");
+  map =  loadImage("New Map.png");
 
   //Sprites
   torch = loadImage("SmallTorch.png");
@@ -88,7 +91,15 @@ void setup() {
   myObjects = new ArrayList<GameObject>(1000);
   myObjects.add(myHero);
 
-  myObjects.add(new Enemy());
+  //myObjects.add(new Enemy());
+  myObjects.add(new Follower(1, 2));
+  myObjects.add(new Follower(1, 2));
+  myObjects.add(new Follower(2, 1));
+  myObjects.add(new Follower(1, 2));
+  myObjects.add(new Anventia(1, 1));
+  myObjects.add(new Turret(1, 1));
+
+
 
 
 
@@ -106,9 +117,9 @@ void setup() {
     }
   }
   rectMode(CENTER);
-   
-   
-   //test
+
+
+  //test
 
   mode = INTRO;
 }

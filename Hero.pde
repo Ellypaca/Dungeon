@@ -1,9 +1,11 @@
 class Hero extends GameObject {
   float speed;
   PVector direction;
+  boolean invincible;
+  int invinTimer;
+  color clr;
 
   Weapon myWeapon;
-  Weapon Fast;
 
   Hero() {
     super();
@@ -11,7 +13,9 @@ class Hero extends GameObject {
     roomX = 1;
     roomY = 1;
     size = 40.0;
-    myWeapon = new Bow();
+    myWeapon = new AOE(); //Bow, mage, aoe
+    clr= Mauve;
+    invinTimer = 60;
 
 
     direction = new PVector(0, -0.1);
@@ -21,7 +25,8 @@ class Hero extends GameObject {
   }
 
   void show() {
-    fill(Mauve);
+
+    fill(clr);
     noStroke();
     circle(loc.x, loc.y, size);
   }
@@ -50,27 +55,27 @@ class Hero extends GameObject {
 
     //Check exits
     //north
-    if (northRoom != White && loc.y <= height*0.139 && loc.x >= width/2-50 && loc.x <= width/2+50) {
+    if (northRoom != White && loc.y <= height*0.18-size/2 && loc.x >= width/2-50 && loc.x <= width/2+50) {
       roomY = roomY - 1;
-      loc = new PVector(width/2, height*0.87-10);
+      loc = new PVector(width/2, height*0.85);
     }
 
     //east
-    else if (eastRoom != White && loc.x >= width*0.86 && loc.y >= height/2-50 && loc.y <= height/2+50) {
+    else if (eastRoom != White && loc.x >= width*0.85+size/4 && loc.y >= height/2-50 && loc.y <= height/2+50) {
       roomX = roomX+1;
-      loc = new PVector(width*0.2, height/2);
+      loc = new PVector(width*0.13, height/2);
     }
 
     //south
-    else if (southRoom != White && loc.y >= height*0.86 && loc.x >= width/2-50 && loc.x <= width/2+50) {
+    else if (southRoom != White && loc.y >=height*0.85+size/4 && loc.x >= width/2-50 && loc.x <= width/2+50) {
       roomY = roomY+1; 
-      loc = new PVector(width/2, height*0.19-10);
+      loc = new PVector(width/2, height*0.18);
     }
 
     //west
-    else if (westRoom != White && loc.x <= width*0.139 && loc.y >= height/2-50 && loc.y <= height/2+50) {
+    else if (westRoom != White && loc.x <= width*0.13 && loc.y >= height/2-50 && loc.y <= height/2+50) {
       roomX = roomX-1;
-      loc = new PVector(width*0.85, height/2);
+      loc = new PVector(width*0.83, height/2);
     }
 
     myWeapon.update();
@@ -78,5 +83,55 @@ class Hero extends GameObject {
       myWeapon.show();
       myWeapon.shoot();
     }
+
+
+
+
+    //BUFFS
+    if (invincible) {
+      if (invinTimer == 0) {
+        invinTimer = 60;
+        clr = Mauve;
+        invincible = false;
+      }
+      invinTimer--;
+    }
+
+
+
+    //TAKING DAMAGE
+    int i = 0;
+    while (i<myObjects.size()) {
+      GameObject myObj = myObjects.get(i);
+      if (myObj instanceof Enemy) {
+        if (dist(loc.x, loc.y, myObj.loc.x, myObj.loc.y) <= size/2 + myObj.size/2
+          && roomX == myObj.roomX && roomY == myObj.roomY) {
+
+          if (invincible == false) {
+            if (myObj instanceof Follower) hp = hp - 10;  //clean up later
+            if (myObj instanceof Anventia) {
+              hp = hp - 40; 
+              myObj.hp = 0;
+            }
+            if (myObj instanceof Bullet) {
+              hp = hp - 5; 
+              myObj.hp = 0;
+            }
+            clr = Gold;
+            invincible = true;
+          }
+        }
+      }
+      i++;
+    }
+
+    //DYING
+    if (hp <=0) {
+      mode = GAMEOVER;
+    }
   }
+}
+
+
+void damage() {
 }
