@@ -13,7 +13,7 @@ class Hero extends GameObject {
     roomX = 1;
     roomY = 1;
     size = 40.0;
-    myWeapon = new AOE(); //Bow, mage, aoe
+    myWeapon = new AOE(); //Bow, mage, AOE, wifesteal
     clr= Mauve;
     invinTimer = 60;
 
@@ -103,25 +103,34 @@ class Hero extends GameObject {
     int i = 0;
     while (i<myObjects.size()) {
       GameObject myObj = myObjects.get(i);
-      if (myObj instanceof Enemy) {
+      if (myObj instanceof Enemy || myObj instanceof EnemyBullet) {
         if (dist(loc.x, loc.y, myObj.loc.x, myObj.loc.y) <= size/2 + myObj.size/2
           && roomX == myObj.roomX && roomY == myObj.roomY) {
 
-          if (invincible == false) {
+          if (invincible == false && !(myObj instanceof Spawner) && !(myObj instanceof Turret)) {
             if (myObj instanceof Follower) hp = hp - 10;  //clean up later
             if (myObj instanceof Anventia) {
               hp = hp - 40; 
               myObj.hp = 0;
             }
-            if (myObj instanceof Bullet) {
+
+            if (myObj instanceof EnemyBullet) {
               hp = hp - 5; 
               myObj.hp = 0;
             }
+
+
+            if (myObj instanceof Shade) {
+              hp = hp - 20;
+            }
+
             clr = Gold;
             invincible = true;
           }
         }
       }
+
+
       i++;
     }
 

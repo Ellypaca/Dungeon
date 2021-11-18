@@ -2,13 +2,12 @@ void game() {
   frameRate(50);
   drawRoom();
   drawGameObjects();
-  // drawLightLayer();
+  drawLightLayer();
   drawMiniMap();
   drawInterface();
 
   //Pause/menu button
   drawPause();
-
 
   ////testing
 }
@@ -97,6 +96,7 @@ void drawMiniMap() {
   noStroke();
   while (y < map.height) {
     color c  = map.get(x, y);
+    if (c != White) c = Black;
     fill(c);
     square(50+x*10, 50+y*10, size);
     x = x+1;
@@ -110,6 +110,9 @@ void drawMiniMap() {
   fill(#FAE630);
   square(50+myHero.roomX*10, 50+myHero.roomY*10, 10);
   rectMode(CENTER);
+  
+  x = 0;
+  y = 0;
 }
 
 void drawPause() {

@@ -35,6 +35,8 @@ class Weapon {
 
       aimVector.setMag(bulletSpeed);
       myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 10));
+      //Bullet = true;
+
 
       shotTimer = 0;
     }
@@ -109,6 +111,23 @@ class AOE extends Weapon {
   }
 }
 
+
+class Wifesteal extends Weapon {
+  Wifesteal() {
+    super(40, 10);
+  }
+
+  void shoot() {
+    if (shotTimer >= threshold ) {
+      if (shotTimer >= threshold ) {
+        aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
+        aimVector.setMag(bulletSpeed);
+        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 39));
+        shotTimer = 0;
+      }
+    }
+  }
+}
 
 
 

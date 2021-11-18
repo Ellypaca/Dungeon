@@ -46,6 +46,7 @@ PFont USA, USR;
 //IMAGES
 PImage map;
 color northRoom, eastRoom, southRoom, westRoom;
+//Room colours: #fa0000 (red), #fee606 (yellow), #621262 (purple), #1209f8 (dark blue), #2d8e2a (green)
 
 //SPRITES
 PImage torch;
@@ -53,6 +54,7 @@ PImage torch;
 //OBJECTS
 ArrayList<GameObject> myObjects;
 Hero myHero;
+//final int 
 
 
 //DARKNESS
@@ -81,7 +83,7 @@ void setup() {
   PauseButton = new Button("Click here to resume", width/2, 300, 300, 100, Black, White );
 
   //Images
-  map =  loadImage("New Map.png");
+  map =  loadImage("EnemyMap.png");
 
   //Sprites
   torch = loadImage("SmallTorch.png");
@@ -97,8 +99,16 @@ void setup() {
   myObjects.add(new Follower(2, 1));
   myObjects.add(new Follower(1, 2));
   myObjects.add(new Anventia(1, 1));
+  myObjects.add(new Anventia(1, 1));
+  myObjects.add(new Anventia(4, 1));
+
+  myObjects.add(new Shade(1, 1));
+  myObjects.add(new Shade(2, 1));
+  myObjects.add(new Shade(2, 1));
   myObjects.add(new Turret(1, 1));
 
+  myObjects.add(new Spawner(4, 2));
+  //myObjects.add(new Spawner(1, 1));
 
 
 
