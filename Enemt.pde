@@ -9,7 +9,10 @@ class Enemy extends GameObject {
   }
 
   Enemy (int aichpee, int s, int x, int y) {
-    loc =  new PVector(random(200, 600), random(100, 500));
+    loc = new PVector(random(80, width-80), random(60, height-60));
+    while (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y)<200) {
+      loc = new PVector(random(80, width-80), random(60, height-60));
+    }
     vel = new PVector (0, 0);
     hp = aichpee;
     size = s;
@@ -38,7 +41,7 @@ class Enemy extends GameObject {
         float d = dist(obj.loc.x, obj.loc.y, loc.x, loc.y);
         if (d <= size/2 + obj.size/2) {
           hp = hp-int(obj.vel.mag());
-          if (obj.size == 39) {
+          if (obj.size == 39 ) { //change later
             if (myHero.hp < 130) {
               myHero.hp = myHero.hp+2;
               if (myHero.hp >130) {
@@ -47,6 +50,7 @@ class Enemy extends GameObject {
             }
           }
 
+        
           //hp = hp - ((Bullet) obj).damage; //downcasting
 
           obj.hp = 0;
@@ -117,6 +121,10 @@ class Anventia extends Enemy {
     if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= 100) {
       vel.setMag(6);
     }
+
+    if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= myHero.size/2 + size/2) {
+      hp = 0;
+    }
   }
 }
 
@@ -126,7 +134,6 @@ class Anventia extends Enemy {
 class Shade extends Enemy {
   Shade(int x, int y) {
     super(30, 50, x, y);
-    
   }
 
   void show() {
@@ -194,8 +201,9 @@ class Spawner extends Enemy {
 
     spawnTimer++;
     if (spawnTimer>= threshold) {
-      myObjects.add(new Follower(1, 1, loc.x, loc.y));
+      myObjects.add(new Follower(roomX, roomY, loc.x, loc.y));
       spawnTimer = 0;
     }
+    
   }
 }

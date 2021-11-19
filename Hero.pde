@@ -104,14 +104,14 @@ class Hero extends GameObject {
     while (i<myObjects.size()) {
       GameObject myObj = myObjects.get(i);
       if (myObj instanceof Enemy || myObj instanceof EnemyBullet) {
-        if (dist(loc.x, loc.y, myObj.loc.x, myObj.loc.y) <= size/2 + myObj.size/2
+        if (dist(loc.x, loc.y, myObj.loc.x, myObj.loc.y) <= size/2 + myObj.size/2 +10
           && roomX == myObj.roomX && roomY == myObj.roomY) {
 
           if (invincible == false && !(myObj instanceof Spawner) && !(myObj instanceof Turret)) {
             if (myObj instanceof Follower) hp = hp - 10;  //clean up later
             if (myObj instanceof Anventia) {
-              hp = hp - 40; 
               myObj.hp = 0;
+              hp = hp - 40;
             }
 
             if (myObj instanceof EnemyBullet) {
@@ -128,7 +128,10 @@ class Hero extends GameObject {
             invincible = true;
           }
         }
+
+
       }
+
 
 
       i++;

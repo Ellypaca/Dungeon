@@ -39,6 +39,12 @@ color Black = #000000;
 color White = #FFFFFF;
 color Green = #76B26E;
 color Gold = #F7C90C;
+color mapPink = #ff00f2;
+color mapRed = #fa0000;
+color mapYellow = #fee606;
+color mapPurple = #621262;
+color mapGreen = #2d8e2a;
+color mapBlue = #1209f8;
 
 //FONTS
 PFont USA, USR;
@@ -68,7 +74,7 @@ float acc;
 
 
 void setup() {
-  size(800, 600, FX2D);
+  size(800, 600, FX2D); //640, 480
 
   //Aligns
   textAlign(CENTER, CENTER);
@@ -83,7 +89,7 @@ void setup() {
   PauseButton = new Button("Click here to resume", width/2, 300, 300, 100, Black, White );
 
   //Images
-  map =  loadImage("EnemyMap.png");
+  map =  loadImage("Enemy Map.png");
 
   //Sprites
   torch = loadImage("SmallTorch.png");
@@ -93,22 +99,7 @@ void setup() {
   myObjects = new ArrayList<GameObject>(1000);
   myObjects.add(myHero);
 
-  //myObjects.add(new Enemy());
-  myObjects.add(new Follower(1, 2));
-  myObjects.add(new Follower(1, 2));
-  myObjects.add(new Follower(2, 1));
-  myObjects.add(new Follower(1, 2));
-  myObjects.add(new Anventia(1, 1));
-  myObjects.add(new Anventia(1, 1));
-  myObjects.add(new Anventia(4, 1));
 
-  myObjects.add(new Shade(1, 1));
-  myObjects.add(new Shade(2, 1));
-  myObjects.add(new Shade(2, 1));
-  myObjects.add(new Turret(1, 1));
-
-  myObjects.add(new Spawner(4, 2));
-  //myObjects.add(new Spawner(1, 1));
 
 
 
@@ -131,7 +122,55 @@ void setup() {
 
   //test
 
-  mode = INTRO;
+  mode = INTRO; //INTRO
+
+  //loading enemies from  map===============
+  int xx = 0;
+  int yy = 0;
+  while (yy < map.height) {
+    color roomColour  = map.get(xx, yy);
+
+
+    if (roomColour == mapPink) {            //starting room
+      myObjects.add(new Follower(xx, yy));
+    }
+
+
+    if (roomColour == mapRed) {          //normal room
+      int a = int(random(1, 5));
+      for (int n = 0; n<a; n++) {
+        myObjects.add(new Follower(xx, yy));
+      }
+      myObjects.add(new Anventia(xx, yy));
+      myObjects.add(new Shade(xx, yy));
+    }
+
+    if (roomColour == mapYellow) {      //treasure room
+      myObjects.add(new Turret(xx, yy));
+      myObjects.add(new Turret(xx, yy));
+      myObjects.add(new Spawner(xx, yy));
+      myObjects.add(new Anventia(xx, yy));
+    }
+
+    if (roomColour == mapGreen) {        //health room
+      myObjects.add(new Anventia(xx, yy));
+      myObjects.add(new Shade(xx, yy));
+      myObjects.add(new Shade(xx, yy));
+      myObjects.add(new Shade(xx, yy));
+    }
+    
+    if (roomColour == mapPurple){        //challenge or puzzle room
+        
+    }
+    
+    
+
+    xx++;
+    if (xx == map.width) {
+      xx= 0;
+      yy++;
+    }
+  }
 }
 
 void draw() {

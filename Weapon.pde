@@ -119,12 +119,10 @@ class Wifesteal extends Weapon {
 
   void shoot() {
     if (shotTimer >= threshold ) {
-      if (shotTimer >= threshold ) {
-        aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
-        aimVector.setMag(bulletSpeed);
-        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 39));
-        shotTimer = 0;
-      }
+      aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
+      aimVector.setMag(bulletSpeed);
+      myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 39));
+      shotTimer = 0;
     }
   }
 }
@@ -133,12 +131,26 @@ class Wifesteal extends Weapon {
 
 
 
-class LB extends Weapon { //literally leblanc
+//class LB extends Weapon { //literally leblanc
 
 
-  LB() {
-  }
+//  LB() {
+//    super(0, 100);
+//  }
 
-  void shoot() {
-  }
-}
+//  void shoot() {
+//    if (shotTimer >= threshold ) {
+//      aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
+//      aimVector.setMag(bulletSpeed);
+
+//      //instead of bullet
+//      myHero.loc = new PVector(mouseX, mouseY);
+//      //if (dist(myHero.loc.x, myHero.loc.y, Enemy.loc.x, Enemy.loc.y) <= 10){
+        
+//      //}
+      
+
+//      shotTimer = 0;
+//    }
+//  }
+//}

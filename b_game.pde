@@ -8,8 +8,9 @@ void game() {
 
   //Pause/menu button
   drawPause();
-
-  ////testing
+  
+  
+  
 }
 
 
@@ -92,7 +93,7 @@ void drawMiniMap() {
   //image(map, 100, 100, 100, 100);
   int x = 0;
   int y = 0;
-  float size = 10 ;
+  float size = 10;
   noStroke();
   while (y < map.height) {
     color c  = map.get(x, y);
