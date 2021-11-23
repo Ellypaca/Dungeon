@@ -1,4 +1,8 @@
 class Enemy extends GameObject {
+  int shotTimer;
+  int threshold;
+  PVector aimVector;
+
   Enemy() {
     loc = new PVector(0, 0);
     vel = new PVector (0, 0);
@@ -42,15 +46,14 @@ class Enemy extends GameObject {
         if (d <= size/2 + obj.size/2) {
           hp = hp-int(obj.vel.mag());
           if (obj.size == 39 ) { //change later
-            if (myHero.hp < 130) {
-              myHero.hp = myHero.hp+2;
-              if (myHero.hp >130) {
-                myHero.hp = 130;
+            if (myHero.hp < WIFESTEAL_CAP) {
+              myHero.hp = myHero.hp+10;
+              if (myHero.hp > WIFESTEAL_CAP) {
+                myHero.hp = WIFESTEAL_CAP;
               }
             }
           }
 
-        
           //hp = hp - ((Bullet) obj).damage; //downcasting
 
           obj.hp = 0;
@@ -68,14 +71,16 @@ class Enemy extends GameObject {
 class Follower extends Enemy {
 
   Follower(int x, int y) {
-    super(100, 50, x, y);
+    super(FOLLOWER_HP, FOLLOWER_SIZE, x, y);
   }
-
+  
+  
   Follower(int x, int y, float lx, float ly) {
-    super(100, 50, x, y);
+    super(FOLLOWER_HP-20, FOLLOWER_SIZE, x, y); //make them a bit squishier
     loc.x = lx;
     loc.y = ly;
   }
+
 
   void show() {
     stroke(Black);
@@ -91,7 +96,7 @@ class Follower extends Enemy {
   void act() {
     super.act();
     vel = new PVector(myHero.loc.x - loc.x, myHero.loc.y - loc.y);
-    vel.setMag(3);
+    vel.setMag(FOLLOWER_VEL);
   }
 }
 
@@ -100,8 +105,8 @@ class Follower extends Enemy {
 class Anventia extends Enemy {
 
   Anventia (int x, int y) {
-    super(10, 50, x, y);
-    loc =  new PVector(200, 100);
+    super(ANVENTIA_HP, ANVENTIA_SIZE, x, y);
+    loc =  new PVector(ANVENTIA_LOC_X, ANVENTIA_LOC_Y); //so it doesnt instantly jump you
   }
 
   void show() {
@@ -116,7 +121,7 @@ class Anventia extends Enemy {
   void act() {
     super.act();
     vel = new PVector(myHero.loc.x - loc.x, myHero.loc.y - loc.y);
-    vel.setMag(0.5);
+    vel.setMag(0.25);
 
     if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= 100) {
       vel.setMag(6);
@@ -133,11 +138,10 @@ class Anventia extends Enemy {
 //Shade
 class Shade extends Enemy {
   Shade(int x, int y) {
-    super(30, 50, x, y);
+    super(SHADE_HP, SHADE_SIZE, x, y);
   }
 
   void show() {
-    //vel.setMag(0);
 
     noStroke();
     fill(Black);
@@ -161,14 +165,11 @@ class Shade extends Enemy {
 
 //turret
 class Turret extends Enemy {
-  int shotTimer;
-  int threshold;
-  PVector aimVector;
 
   Turret(int x, int y) {
-    super(150, 80, x, y);
+    super(TURRET_HP, TURRET_SIZE, x, y);
     shotTimer = 0;
-    threshold = 40;
+    threshold = TURRET_THRESHOLD;
   }
 
 
@@ -189,21 +190,46 @@ class Turret extends Enemy {
 
 
 class Spawner extends Enemy {
-  int spawnTimer;
-  int threshold; 
+  
   Spawner (int x, int y) {
-    super(300, 100, x, y);
-    threshold = 150;
+    super(SPAWNER_HP, SPAWNER_SIZE, x, y);
+    threshold = SPAWNER_THRESHOLD;
   }
 
   void act() {
     super.act();
 
-    spawnTimer++;
-    if (spawnTimer>= threshold) {
+    shotTimer++;
+    if (shotTimer>= threshold) {
       myObjects.add(new Follower(roomX, roomY, loc.x, loc.y));
-      spawnTimer = 0;
+      shotTimer = 0;
     }
-    
+  }
+}
+
+class Dragon extends Enemy {    //boss
+
+  Dragon (int x, int y) {
+    super(750, 150, x, y);
+    threshold = 150;
+  }
+
+  void show() {
+    stroke(Black);
+    strokeWeight(3);
+    fill(#953708); //mahogany
+    circle(loc.x, loc.y, size);
+    fill(Gray);
+    textSize(20);
+    text(hp, loc.x, loc.y);  //make hp bar later
+  }
+
+
+  void act() {
+    super.act();
+
+    shotTimer++;
+    if (shotTimer >= threshold) {
+    }
   }
 }

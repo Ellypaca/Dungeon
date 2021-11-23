@@ -1,6 +1,5 @@
 class Hero extends GameObject {
   float speed;
-  PVector direction;
   boolean invincible;
   int invinTimer;
   color clr;
@@ -18,7 +17,6 @@ class Hero extends GameObject {
     invinTimer = 60;
 
 
-    direction = new PVector(0, -0.1);
 
     //ArrayList<Weapon> Weapons;
     //myWeapon = new Bow();

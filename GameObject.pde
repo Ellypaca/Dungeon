@@ -20,6 +20,11 @@ class GameObject {
 
   void  act() {
     loc.add(vel);
+    
+    //COLLISIONS================
+    
+    
+    
 
     if ( loc.y > height*0.9-size/2) loc.y = height*0.9-size/2;
     if ( loc.y < height*0.1+size/2) loc.y = height*0.1+size/2;

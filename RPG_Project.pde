@@ -10,6 +10,59 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+//settings: enemies
+final int TURRET_HP = 150;
+final int TURRET_SIZE = 100;
+final int TURRET_THRESHOLD = 40;
+
+final int SPAWNER_HP = 300;
+final int SPAWNER_SIZE = 100;
+final int SPAWNER_THRESHOLD = 150;
+
+final int SHADE_HP = 30;
+final int SHADE_SIZE = 50;
+
+final int ANVENTIA_HP = 10;
+final int ANVENTIA_SIZE = 40;
+final int ANVENTIA_LOC_X = 200;
+final int ANVENTIA_LOC_Y = 100;
+
+final int FOLLOWER_HP = 100;
+final int FOLLOWER_SIZE = 50;
+final int FOLLOWER_VEL = 2;
+
+//settings: weapons
+final int BOW_THR = 30;
+final int BOW_VEL = 35;
+final int BOW_BULLET_S = 10;
+
+final int MAGE_THR = 6;
+final int MAGE_VEL = 2;
+final int MAGE_BULLET_S = 20;
+
+final int AOE_THR = 20;
+final int AOE_VEL = 2;
+final int AOE_BULLET_S = 20;
+
+final int WIFESTEAL_THR = 40;
+final int WIFESTEAL_VEL = 10;
+final int WIFESTEAL_BULLET_S = 39;
+final int WIFESTEAL_CAP = 130;
+
+//final int
+//final int
+//final int
+//final int
+//final int
+//final int
+//final int
+//final int
+//final int
+
+
+
+
+
 //Mode Framework
 int mode;
 int INTRO = 0;
@@ -158,12 +211,24 @@ void setup() {
       myObjects.add(new Shade(xx, yy));
       myObjects.add(new Shade(xx, yy));
     }
-    
-    if (roomColour == mapPurple){        //challenge or puzzle room
-        
+
+    if (roomColour == mapPurple) {        //challenge or puzzle room
+      myObjects.add(new Anventia(xx, yy));
+      myObjects.add(new Anventia(xx, yy));
+      myObjects.add(new Anventia(xx, yy));
+      
+      
+      myObjects.add(new Spawner(xx, yy));
+      myObjects.add(new Spawner(xx, yy));
     }
-    
-    
+
+
+    if (roomColour == mapBlue) {        //final boss room
+      myObjects.add(new Dragon(xx, yy));
+    }
+
+
+
 
     xx++;
     if (xx == map.width) {

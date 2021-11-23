@@ -46,14 +46,14 @@ class Weapon {
 
 class Bow extends Weapon {
   Bow() {
-    super(30, 35);
+    super(BOW_THR, BOW_VEL);
   }
 
   void shoot() {
     if (shotTimer >= threshold ) {
       aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
       aimVector.setMag(bulletSpeed);
-      myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 10));
+      myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, BOW_BULLET_S));
       shotTimer = 0;
     }
   }
@@ -61,7 +61,7 @@ class Bow extends Weapon {
 
 class Mage extends Weapon {
   Mage() {
-    super(6, 2);
+    super(MAGE_THR, MAGE_VEL);
   }
 
   void shoot() {
@@ -70,7 +70,7 @@ class Mage extends Weapon {
         aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
         aimVector.rotate(random(-0.5, 0.5));
         aimVector.setMag(bulletSpeed);
-        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, 20));
+        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, MAGE_BULLET_S));
         shotTimer = 0;
       }
     }
@@ -87,11 +87,12 @@ class Mage extends Weapon {
 
 //}
 
+
 class AOE extends Weapon {
   int r;
 
   AOE() {
-    super(20, 2);
+    super(AOE_THR, AOE_VEL);
     r = -10;
   }
 
@@ -103,7 +104,7 @@ class AOE extends Weapon {
         aimVector.rotate(radians(r));
         r = r+24;
         aimVector.setMag(bulletSpeed);
-        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, 20));
+        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, AOE_BULLET_S));
       }
 
       shotTimer = 0;
@@ -114,14 +115,14 @@ class AOE extends Weapon {
 
 class Wifesteal extends Weapon {
   Wifesteal() {
-    super(40, 10);
+    super(WIFESTEAL_THR, WIFESTEAL_VEL);
   }
 
   void shoot() {
     if (shotTimer >= threshold ) {
       aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
       aimVector.setMag(bulletSpeed);
-      myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 39));
+      myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, WIFESTEAL_BULLET_S));
       shotTimer = 0;
     }
   }
