@@ -10,6 +10,13 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+
+//settings: items
+final int AMMO = 0;
+final int MONEY = 1;
+final int GUN = 2;
+final int HP = 3;
+
 //settings: enemies
 final int TURRET_HP = 150;
 final int TURRET_SIZE = 100;
@@ -40,14 +47,16 @@ final int MAGE_THR = 6;
 final int MAGE_VEL = 2;
 final int MAGE_BULLET_S = 20;
 
-final int AOE_THR = 20;
-final int AOE_VEL = 2;
+final int AOE_THR = 4;
+final int AOE_VEL = 5;
 final int AOE_BULLET_S = 20;
 
 final int WIFESTEAL_THR = 40;
 final int WIFESTEAL_VEL = 10;
 final int WIFESTEAL_BULLET_S = 39;
-final int WIFESTEAL_CAP = 130;
+
+//settings: hero
+final int HP_CAP = 200;
 
 //final int
 //final int
@@ -103,9 +112,12 @@ color mapBlue = #1209f8;
 PFont USA, USR;
 
 //IMAGES
-PImage map;
+PImage  map;
 color northRoom, eastRoom, southRoom, westRoom;
 //Room colours: #fa0000 (red), #fee606 (yellow), #621262 (purple), #1209f8 (dark blue), #2d8e2a (green)
+
+//GIFS
+AnimatedGIF manUp, manDown, manRight, manLeft;
 
 //SPRITES
 PImage torch;
@@ -143,6 +155,13 @@ void setup() {
 
   //Images
   map =  loadImage("Enemy Map.png");
+
+  //GIFs
+  manUp = new AnimatedGIF(4, 10, "data/Hero/_up/hero_up_", ".png");
+  manRight = new AnimatedGIF(4, 10, "data/Hero/_right/hero_right_", ".png");
+  manLeft = new AnimatedGIF(4, 10, "data/Hero/_left/hero_left_", ".png");
+  manDown = new AnimatedGIF(4, 10, "data/Hero/_down/hero_down_", ".png");
+
 
   //Sprites
   torch = loadImage("SmallTorch.png");
@@ -216,8 +235,8 @@ void setup() {
       myObjects.add(new Anventia(xx, yy));
       myObjects.add(new Anventia(xx, yy));
       myObjects.add(new Anventia(xx, yy));
-      
-      
+
+
       myObjects.add(new Spawner(xx, yy));
       myObjects.add(new Spawner(xx, yy));
     }

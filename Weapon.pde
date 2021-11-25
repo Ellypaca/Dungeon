@@ -4,6 +4,7 @@ class Weapon {
   int bulletSpeed;
   PVector loc; //location
   PVector aimVector;
+  int WeaponNum;
 
   Weapon() {
     shotTimer = 0;
@@ -47,6 +48,7 @@ class Weapon {
 class Bow extends Weapon {
   Bow() {
     super(BOW_THR, BOW_VEL);
+    WeaponNum = 0;
   }
 
   void shoot() {
@@ -94,6 +96,7 @@ class AOE extends Weapon {
   AOE() {
     super(AOE_THR, AOE_VEL);
     r = -10;
+    WeaponNum = 1;
   }
 
   void shoot() {
@@ -116,6 +119,7 @@ class AOE extends Weapon {
 class Wifesteal extends Weapon {
   Wifesteal() {
     super(WIFESTEAL_THR, WIFESTEAL_VEL);
+    WeaponNum= 2;
   }
 
   void shoot() {

@@ -41,22 +41,25 @@ class Enemy extends GameObject {
     int i = 0;
     while (i < myObjects.size()) {
       GameObject obj = myObjects.get(i);
-      if (obj instanceof Bullet && roomX == obj.roomX && roomY == obj.roomY) {
+      if (obj instanceof Bullet && isCollidingWith(obj)) {
         float d = dist(obj.loc.x, obj.loc.y, loc.x, loc.y);
         if (d <= size/2 + obj.size/2) {
           hp = hp-int(obj.vel.mag());
-          if (obj.size == 39 ) { //change later
-            if (myHero.hp < WIFESTEAL_CAP) {
-              myHero.hp = myHero.hp+10;
-              if (myHero.hp > WIFESTEAL_CAP) {
-                myHero.hp = WIFESTEAL_CAP;
-              }
-            }
+
+
+          if (myHero.myWeapon.WeaponNum == 2) {//obj.size == 39 ) { //change later
+            myHero.hp = myHero.hp+2;
           }
 
           //hp = hp - ((Bullet) obj).damage; //downcasting
 
           obj.hp = 0;
+
+          if (hp<0) {
+            myObjects.add(new DroppedW(loc.x, loc.y, roomX, roomY)); 
+
+            myObjects.add(new DroppedHP(loc.x, loc.y, roomX, roomY));
+          }
         }
       }
 
@@ -73,8 +76,8 @@ class Follower extends Enemy {
   Follower(int x, int y) {
     super(FOLLOWER_HP, FOLLOWER_SIZE, x, y);
   }
-  
-  
+
+
   Follower(int x, int y, float lx, float ly) {
     super(FOLLOWER_HP-20, FOLLOWER_SIZE, x, y); //make them a bit squishier
     loc.x = lx;
@@ -153,10 +156,12 @@ class Shade extends Enemy {
 
   void act() {
     super.act();
+    vel = new PVector(myHero.loc.x - loc.x, myHero.loc.y - loc.y);
 
-    if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= 100) {
-      vel = new PVector(myHero.loc.x - loc.x, myHero.loc.y - loc.y);
+    if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= 150) {
       vel.setMag(3);
+    } else {
+      vel.setMag(0);
     }
   }
 }
@@ -190,7 +195,7 @@ class Turret extends Enemy {
 
 
 class Spawner extends Enemy {
-  
+
   Spawner (int x, int y) {
     super(SPAWNER_HP, SPAWNER_SIZE, x, y);
     threshold = SPAWNER_THRESHOLD;

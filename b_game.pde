@@ -8,9 +8,8 @@ void game() {
 
   //Pause/menu button
   drawPause();
-  
-  
-  
+
+
 }
 
 
@@ -111,7 +110,7 @@ void drawMiniMap() {
   fill(#FAE630);
   square(50+myHero.roomX*10, 50+myHero.roomY*10, 10);
   rectMode(CENTER);
-  
+
   x = 0;
   y = 0;
 }
