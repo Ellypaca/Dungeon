@@ -48,7 +48,12 @@ class Enemy extends GameObject {
 
 
           if (myHero.myWeapon.WeaponNum == 2) {//obj.size == 39 ) { //change later
-            myHero.hp = myHero.hp+2;
+            hp = hp-hp%10;
+
+            if (myHero.delaycount > myHero.delay) {
+              myHero.hp = myHero.hp+2;
+              myHero.delaycount = 0;
+            }
           }
 
           //hp = hp - ((Bullet) obj).damage; //downcasting

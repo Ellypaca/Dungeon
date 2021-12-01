@@ -5,9 +5,12 @@ class GameObject {
   int roomX, roomY;
   boolean ally;
   boolean isCollidingWith;
-
+  float delay, delaycount;
+  
   color c;
   int hp, shield;
+  int speed;
+  int xp;
 
 
   GameObject() {

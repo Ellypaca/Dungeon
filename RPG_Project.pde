@@ -87,7 +87,7 @@ Button UnpauseButton;
 
 
 //CONTROLS
-boolean wkey, akey, skey, dkey, spacekey, qkey, ekey, shiftkey;
+boolean wkey, akey, skey, dkey, spacekey, qkey, ekey, shiftkey, pkey;
 
 //COLOURS
 //https://www.colourlovers.com/palette/3115147/Caved_In
@@ -100,7 +100,9 @@ color Yellow = #E7B855;
 color Black = #000000;
 color White = #FFFFFF;
 color Green = #76B26E;
+color BrightGreen = #3EE807;
 color Gold = #F7C90C;
+color Steel = #908D8A;
 color mapPink = #ff00f2;
 color mapRed = #fa0000;
 color mapYellow = #fee606;
@@ -117,7 +119,13 @@ color northRoom, eastRoom, southRoom, westRoom;
 //Room colours: #fa0000 (red), #fee606 (yellow), #621262 (purple), #1209f8 (dark blue), #2d8e2a (green)
 
 //GIFS
+//MAN
 AnimatedGIF manUp, manDown, manRight, manLeft;
+PImage ManU, ManD, ManR, ManL;
+
+//ENEMY
+//AnimatedGIF 
+
 
 //SPRITES
 PImage torch;
@@ -156,11 +164,21 @@ void setup() {
   //Images
   map =  loadImage("Enemy Map.png");
 
-  //GIFs
+  //GIFs==========================
+  //HERO
   manUp = new AnimatedGIF(4, 10, "data/Hero/_up/hero_up_", ".png");
   manRight = new AnimatedGIF(4, 10, "data/Hero/_right/hero_right_", ".png");
   manLeft = new AnimatedGIF(4, 10, "data/Hero/_left/hero_left_", ".png");
   manDown = new AnimatedGIF(4, 10, "data/Hero/_down/hero_down_", ".png");
+  ManU = loadImage("data/Hero/_up/hero_up_0.png");
+  ManR = loadImage("data/Hero/_right/hero_right_0.png");
+  ManL = loadImage("data/Hero/_left/hero_left_0.png");
+  ManD = loadImage("data/Hero/_down/hero_down_0.png");
+  //ENEMY
+  //FOLLOWER
+
+
+
 
 
   //Sprites

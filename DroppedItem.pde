@@ -1,17 +1,32 @@
 class DroppedW extends GameObject {
   int type;
   Weapon w;
+  int WeaponN;
 
   DroppedW(float x, float y, int rx, int ry) {
     type = GUN;
-    w = new Wifesteal();
+    WeaponN = int(random(0, 3));
+
+    switch (WeaponN) {
+    case 0:
+      w = new Bow();
+      break;
+
+    case 1:
+      w = new AOE();
+      break;
+
+    case 2:
+      w = new Wifesteal();
+      break;
+    }
+
     hp = 1; 
     loc = new PVector(x, y);
     vel = new PVector(0, 0);
     size = 20;
     roomX = rx;
     roomY= ry;
-    c = Yellow;
   }
 
   void show() {
@@ -19,6 +34,8 @@ class DroppedW extends GameObject {
     //add if to change appearance based off of item type
     stroke(Black);
     strokeWeight(2);
+    c = Yellow;
+
     fill(c);
     circle(loc.x, loc.y, size);
   }

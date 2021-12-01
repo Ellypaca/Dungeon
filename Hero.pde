@@ -4,6 +4,7 @@ class Hero extends GameObject {
   int invinTimer;
   color clr;
   AnimatedGIF currentAction;
+  PImage DefaultAction;
 
   Weapon myWeapon;
 
@@ -12,11 +13,19 @@ class Hero extends GameObject {
     speed = 5;
     roomX = 1;
     roomY = 1;
-    size = 80.0;
+    size = 40.0;
     myWeapon = new AOE(); //Bow, mage, AOE, wifesteal
-    clr= Mauve;
+    clr= BrightGreen;
     invinTimer = 60;
     currentAction = manDown;
+    DefaultAction = ManU;
+
+
+
+    //other stuff
+    delay = 0.2;
+    delaycount = 0;
+
 
 
     //ArrayList<Weapon> Weapons;
@@ -29,12 +38,30 @@ class Hero extends GameObject {
     noStroke();
     //circle(loc.x, loc.y, size);
 
-    currentAction.show(loc.x, loc.y, size/1.5, size);
+    if (vel.mag()>0.1) {
+      currentAction.show(loc.x, loc.y, size, size*2);
+    } else {
+      image(DefaultAction, loc.x, loc.y, size, size*2);
+    }
   }
 
 
   void act() {
     super.act();
+    fill(Black);
+    rectMode(CORNER);
+    rect(loc.x-20, loc.y-40, 40, 10);
+
+    if (hp >= HP_CAP/4)    fill(BrightGreen);
+    if (hp <= HP_CAP/5) fill(Yellow);
+    if (hp <= HP_CAP/7) fill(Red);
+
+    println(40*(hp/100));
+    rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
+    rectMode(CENTER);
+
+
+
     if (hp>HP_CAP) {
       hp = HP_CAP;
     }
@@ -77,6 +104,14 @@ class Hero extends GameObject {
       }
     }
 
+    if (vel.mag() <= 0.1) {
+      if (currentAction == manUp) DefaultAction = ManU;
+      if (currentAction == manDown) DefaultAction = ManD;
+      if (currentAction == manLeft) DefaultAction = ManL;
+      if (currentAction == manRight) DefaultAction = ManR;
+    }
+
+
     //Check exits
     //north
     if (northRoom != White && loc.y <= height*0.18-size/2 && loc.x >= width/2-50 && loc.x <= width/2+50) {
@@ -115,11 +150,16 @@ class Hero extends GameObject {
     if (invincible) {
       if (invinTimer == 0) {
         invinTimer = 60;
-        clr = Mauve;
+        clr = BrightGreen;
         invincible = false;
       }
       invinTimer--;
     }
+
+
+    //DELAYS========
+    //healing delay
+    delaycount = delaycount + 0.05;
 
 
 
@@ -167,9 +207,11 @@ class Hero extends GameObject {
 
       if (myObj instanceof DroppedHP && isCollidingWith(myObj)) {
         DroppedHP HP = (DroppedHP) myObj;
-
-        hp= hp+10;
         HP.hp = 0;
+        if (delaycount >= delay) {
+          hp= hp+10;
+          delaycount = 0;
+        }
       }
 
 

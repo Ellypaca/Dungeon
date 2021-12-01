@@ -55,7 +55,7 @@ class Bow extends Weapon {
     if (shotTimer >= threshold ) {
       aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
       aimVector.setMag(bulletSpeed);
-      myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, BOW_BULLET_S));
+      myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Black, BOW_BULLET_S));
       shotTimer = 0;
     }
   }

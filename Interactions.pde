@@ -11,11 +11,11 @@ void keyPressed() {
   if (key == 'S' || key == 's') skey = true;
   if (key == 'A' || key == 'a') akey = true;
   if (key == 'D' || key == 'd') dkey = true;
-  if (key == ' '){
-  spacekey = true;
+  if (key == 'P' || key == 'p') pkey = true;
+  if (key == ' ') {
+    spacekey = true;
   }
- //   if (keyCode == 'SHIFT') shiftkey = true;
-
+  //   if (keyCode == 'SHIFT') shiftkey = true;
 }
 
 void keyReleased() {
@@ -31,6 +31,8 @@ void keyReleased() {
   }
   if (key == 'A' || key == 'a') akey = false;
   if (key == 'D' || key == 'd') dkey = false;
+  if (key == 'P' || key == 'p') pkey = false;
+
   if (key == ' ') spacekey = false;
- // if (keyCode == 'SHIFT') shiftkey = false;
+  // if (keyCode == 'SHIFT') shiftkey = false;
 }
