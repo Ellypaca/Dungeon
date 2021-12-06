@@ -57,6 +57,7 @@ final int WIFESTEAL_BULLET_S = 39;
 
 //settings: hero
 final int HP_CAP = 200;
+final int XP_CAP = 100;
 
 //final int
 //final int
@@ -118,13 +119,16 @@ PImage  map;
 color northRoom, eastRoom, southRoom, westRoom;
 //Room colours: #fa0000 (red), #fee606 (yellow), #621262 (purple), #1209f8 (dark blue), #2d8e2a (green)
 
+PImage floor;
+
+
 //GIFS
 //MAN
 AnimatedGIF manUp, manDown, manRight, manLeft;
 PImage ManU, ManD, ManR, ManL;
 
 //ENEMY
-//AnimatedGIF 
+AnimatedGIF SkeleUp, SkeleDown, SkeleRight, SkeleLeft;
 
 
 //SPRITES
@@ -163,6 +167,7 @@ void setup() {
 
   //Images
   map =  loadImage("Enemy Map.png");
+  floor = loadImage("Floor.png");
 
   //GIFs==========================
   //HERO
@@ -175,7 +180,12 @@ void setup() {
   ManL = loadImage("data/Hero/_left/hero_left_0.png");
   ManD = loadImage("data/Hero/_down/hero_down_0.png");
   //ENEMY
+
   //FOLLOWER
+  SkeleUp = new AnimatedGIF(4, 10, "data/skeleton/SkeleUp/Skeleton_", ".png");
+  SkeleDown = new AnimatedGIF(4, 10, "data/skeleton/SkeleDown/Skeleton_", ".png");
+  SkeleLeft = new AnimatedGIF(4, 10, "data/skeleton/SkeleUp/Skeleton_", ".png");
+  SkeleRight = new AnimatedGIF(4, 10, "data/skeleton/SkeleRight/Skeleton_", ".png");
 
 
 

@@ -22,7 +22,10 @@ class DroppedW extends GameObject {
     }
 
     hp = 1; 
-    loc = new PVector(x, y);
+    pushx = random(-100, 100);
+    pushy = random(-100, 100);
+
+    loc = new PVector(x+pushx, y+pushy);
     vel = new PVector(0, 0);
     size = 20;
     roomX = rx;
@@ -42,6 +45,7 @@ class DroppedW extends GameObject {
 
 
   void act() {
+    super.act();
   }
 }
 
@@ -74,5 +78,6 @@ class DroppedHP extends GameObject {
 
 
   void act() {
+    super.act();
   }
 }

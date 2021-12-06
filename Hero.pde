@@ -5,6 +5,8 @@ class Hero extends GameObject {
   color clr;
   AnimatedGIF currentAction;
   PImage DefaultAction;
+  
+  int heroxp, xpcap;
 
   Weapon myWeapon;
 
@@ -26,7 +28,8 @@ class Hero extends GameObject {
     delay = 0.2;
     delaycount = 0;
 
-
+    //EXP
+    xpcap = XP_CAP;
 
     //ArrayList<Weapon> Weapons;
     //myWeapon = new Bow();
@@ -43,28 +46,26 @@ class Hero extends GameObject {
     } else {
       image(DefaultAction, loc.x, loc.y, size, size*2);
     }
+
+
+    //healthbar
+    fill(Black);
+    rectMode(CORNER);
+    rect(loc.x-20, loc.y-40, 40, 10);
+    if (hp >= HP_CAP/4)    clr = BrightGreen;
+    if (hp <= HP_CAP/5) clr = Yellow;
+    if (hp <= HP_CAP/7) clr = Red;
+    if (invincible) clr = Gold;
+    fill(clr);
+    rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
+    rectMode(CENTER);
   }
 
 
   void act() {
     super.act();
-    fill(Black);
-    rectMode(CORNER);
-    rect(loc.x-20, loc.y-40, 40, 10);
-
-    if (hp >= HP_CAP/4)    fill(BrightGreen);
-    if (hp <= HP_CAP/5) fill(Yellow);
-    if (hp <= HP_CAP/7) fill(Red);
-
-    println(40*(hp/100));
-    rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
-    rectMode(CENTER);
 
 
-
-    if (hp>HP_CAP) {
-      hp = HP_CAP;
-    }
 
     //MOVEMENT=======================================
     //Up
@@ -221,6 +222,10 @@ class Hero extends GameObject {
     //DYING
     if (hp <=0) {
       mode = GAMEOVER;
+    }
+
+    if (hp>HP_CAP) {
+      hp = HP_CAP;
     }
   }
 }

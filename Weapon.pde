@@ -45,7 +45,7 @@ class Weapon {
 }
 
 
-class Bow extends Weapon {
+class Bow extends Weapon {           //make it accelerate
   Bow() {
     super(BOW_THR, BOW_VEL);
     WeaponNum = 0;
@@ -127,6 +127,8 @@ class Wifesteal extends Weapon {
       aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
       aimVector.setMag(bulletSpeed);
       myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, WIFESTEAL_BULLET_S));
+      aimVector.setMag(30);
+      myHero.loc.sub(aimVector);
       shotTimer = 0;
     }
   }

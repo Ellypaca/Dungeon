@@ -6,11 +6,13 @@ class GameObject {
   boolean ally;
   boolean isCollidingWith;
   float delay, delaycount;
-  
+
   color c;
   int hp, shield;
   int speed;
   int xp;
+  float pushx, pushy;
+
 
 
   GameObject() {
@@ -41,7 +43,7 @@ class GameObject {
   //COLLISIONS================
   //in room with
   boolean  inRoomWith(GameObject myObj) {
-    if (roomX == myObj.roomX && roomY == myObj.roomY) {
+    if (roomX == myObj.roomX && roomY == myObj.roomY ) {
       return true;
     } else {
       return false;

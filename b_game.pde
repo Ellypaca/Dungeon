@@ -2,14 +2,12 @@ void game() {
   frameRate(50);
   drawRoom();
   drawGameObjects();
-  drawLightLayer();
-  drawMiniMap();
+  //drawLightLayer();
+ // drawMiniMap();
   drawInterface();
 
   //Pause/menu button
   drawPause();
-
-
 }
 
 
@@ -58,8 +56,24 @@ void drawRoom() {
   stroke(Black);
   rect(width/2, height/2, width*0.8, height*0.8);    //640 and 480
 
-  //image
-  fill(Mauve);
+  //floor image
+  //80 (8) by 80 (6)
+  rectMode(CORNER);
+  int x = 120;
+  int y = 100;
+  for (int i = 0; i < 48; i++) {
+    image(floor, x, y);
+    x = x + 80;
+   if (x >  680){
+    x = 120; 
+    y = y+80;
+   }
+    
+  }
+
+
+  image(floor, 680, 100);
+  rectMode(CENTER);
 }
 
 
@@ -116,6 +130,9 @@ void drawMiniMap() {
 }
 
 void drawPause() {
+  if (pkey) {
+    mode = PAUSE;
+  }
 }
 
 

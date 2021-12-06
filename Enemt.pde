@@ -41,7 +41,7 @@ class Enemy extends GameObject {
     int i = 0;
     while (i < myObjects.size()) {
       GameObject obj = myObjects.get(i);
-      if (obj instanceof Bullet && isCollidingWith(obj)) {
+      if (obj instanceof Bullet && isCollidingWith(obj) && hp>0) {
         float d = dist(obj.loc.x, obj.loc.y, loc.x, loc.y);
         if (d <= size/2 + obj.size/2) {
           hp = hp-int(obj.vel.mag());
@@ -60,9 +60,8 @@ class Enemy extends GameObject {
 
           obj.hp = 0;
 
-          if (hp<0) {
+          if (hp<=0) {
             myObjects.add(new DroppedW(loc.x, loc.y, roomX, roomY)); 
-
             myObjects.add(new DroppedHP(loc.x, loc.y, roomX, roomY));
           }
         }
@@ -80,6 +79,7 @@ class Follower extends Enemy {
 
   Follower(int x, int y) {
     super(FOLLOWER_HP, FOLLOWER_SIZE, x, y);
+    xp = 5;
   }
 
 
@@ -87,6 +87,7 @@ class Follower extends Enemy {
     super(FOLLOWER_HP-20, FOLLOWER_SIZE, x, y); //make them a bit squishier
     loc.x = lx;
     loc.y = ly;
+    
   }
 
 
@@ -115,6 +116,7 @@ class Anventia extends Enemy {
   Anventia (int x, int y) {
     super(ANVENTIA_HP, ANVENTIA_SIZE, x, y);
     loc =  new PVector(ANVENTIA_LOC_X, ANVENTIA_LOC_Y); //so it doesnt instantly jump you
+    xp = 5 
   }
 
   void show() {
@@ -124,6 +126,7 @@ class Anventia extends Enemy {
     fill(Black);
     textSize(20);
     text(hp, loc.x, loc.y);
+    
   }
 
   void act() {
@@ -145,6 +148,9 @@ class Anventia extends Enemy {
 
 //Shade
 class Shade extends Enemy {
+  AnimatedGIF currentAction;
+  PImage DefaultAction;
+
   Shade(int x, int y) {
     super(SHADE_HP, SHADE_SIZE, x, y);
   }
