@@ -3,6 +3,7 @@ class Enemy extends GameObject {
   int threshold;
   PVector aimVector;
 
+
   Enemy() {
     loc = new PVector(0, 0);
     vel = new PVector (0, 0);
@@ -44,8 +45,7 @@ class Enemy extends GameObject {
       if (obj instanceof Bullet && isCollidingWith(obj) && hp>0) {
         float d = dist(obj.loc.x, obj.loc.y, loc.x, loc.y);
         if (d <= size/2 + obj.size/2) {
-          hp = hp-int(obj.vel.mag());
-
+          hp = hp-int(obj.vel.mag() + myHero.dmgbonus);
 
           if (myHero.myWeapon.WeaponNum == 2) {//obj.size == 39 ) { //change later
             hp = hp-hp%10;
@@ -55,14 +55,25 @@ class Enemy extends GameObject {
               myHero.delaycount = 0;
             }
           }
+    
+    
+
 
           //hp = hp - ((Bullet) obj).damage; //downcasting
-
-          obj.hp = 0;
+          if (myHero.myWeapon.WeaponNum != 3) {
+            obj.hp = 0;
+          } else {
+            obj.hp--;
+          }
 
           if (hp<=0) {
-            myObjects.add(new DroppedW(loc.x, loc.y, roomX, roomY)); 
-            myObjects.add(new DroppedHP(loc.x, loc.y, roomX, roomY));
+            if (xp != 0) { //spawned enemies give 0 exp
+              myObjects.add(new DroppedW(loc.x, loc.y, roomX, roomY)); 
+              myObjects.add(new DroppedHP(loc.x, loc.y, roomX, roomY));
+              myObjects.add(new Message (loc, "+"+xp, 50, roomX, roomY, White));
+
+              myHero.xp = myHero.xp + xp;
+            }
           }
         }
       }
@@ -76,36 +87,68 @@ class Enemy extends GameObject {
 
 //Enemy Follower
 class Follower extends Enemy {
+  AnimatedGIF FollowerAction;
+  float barsizex, barsizey;
+
 
   Follower(int x, int y) {
     super(FOLLOWER_HP, FOLLOWER_SIZE, x, y);
+
     xp = 5;
+    FollowerAction = SkeleLeft;
   }
 
 
   Follower(int x, int y, float lx, float ly) {
+
     super(FOLLOWER_HP-20, FOLLOWER_SIZE, x, y); //make them a bit squishier
+
+
     loc.x = lx;
     loc.y = ly;
-    
+    FollowerAction = SkeleLeft;
+
+    xp = 0;
   }
 
 
   void show() {
-    stroke(Black);
-    strokeWeight(2);
-    fill(Greyer);
-    circle(loc.x, loc.y, size);
+    FollowerAction.show(loc.x, loc.y, size/2, size*1.2);
+    fill(White);
+    rectMode(CORNER);
+    rect(loc.x-20, loc.y-50, 40, 20);
+
+    fill(BrightGreen);
+    rect(loc.x-20, loc.y-50, (40*hp)/100, 20);
+    rectMode(CENTER);
+
     fill(Black);
+    strokeWeight(2);
     textSize(20);
-    text(hp, loc.x, loc.y);
+    text(hp, loc.x, loc.y-40);
   }
 
 
   void act() {
     super.act();
+
+
     vel = new PVector(myHero.loc.x - loc.x, myHero.loc.y - loc.y);
     vel.setMag(FOLLOWER_VEL);
+
+    if (abs(vel.y) > abs(vel.x)) {
+      if (vel.y > 0) {
+        FollowerAction = SkeleDown;
+      } else {
+        FollowerAction = SkeleUp;
+      }
+    } else {
+      if (vel.x > 0) {
+        FollowerAction = SkeleRight;
+      } else {
+        FollowerAction = SkeleLeft;
+      }
+    }
   }
 }
 
@@ -116,7 +159,7 @@ class Anventia extends Enemy {
   Anventia (int x, int y) {
     super(ANVENTIA_HP, ANVENTIA_SIZE, x, y);
     loc =  new PVector(ANVENTIA_LOC_X, ANVENTIA_LOC_Y); //so it doesnt instantly jump you
-    xp = 5 
+    xp = 10;
   }
 
   void show() {
@@ -126,7 +169,6 @@ class Anventia extends Enemy {
     fill(Black);
     textSize(20);
     text(hp, loc.x, loc.y);
-    
   }
 
   void act() {
@@ -136,10 +178,6 @@ class Anventia extends Enemy {
 
     if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= 100) {
       vel.setMag(6);
-    }
-
-    if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= myHero.size/2 + size/2) {
-      hp = 0;
     }
   }
 }
@@ -153,6 +191,7 @@ class Shade extends Enemy {
 
   Shade(int x, int y) {
     super(SHADE_HP, SHADE_SIZE, x, y);
+    xp = 7;
   }
 
   void show() {
@@ -186,6 +225,7 @@ class Turret extends Enemy {
     super(TURRET_HP, TURRET_SIZE, x, y);
     shotTimer = 0;
     threshold = TURRET_THRESHOLD;
+    xp = 20;
   }
 
 
@@ -210,6 +250,7 @@ class Spawner extends Enemy {
   Spawner (int x, int y) {
     super(SPAWNER_HP, SPAWNER_SIZE, x, y);
     threshold = SPAWNER_THRESHOLD;
+    xp = 30;
   }
 
   void act() {
@@ -228,6 +269,7 @@ class Dragon extends Enemy {    //boss
   Dragon (int x, int y) {
     super(750, 150, x, y);
     threshold = 150;
+    xp = 200;
   }
 
   void show() {

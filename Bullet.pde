@@ -41,7 +41,7 @@ class Bullet extends GameObject {
   void show() {
     noStroke();
     fill(colour);
-    circle(loc.x, loc.y, size);
+    ellipse(loc.x, loc.y, size, size);
   }
 
   void act() {

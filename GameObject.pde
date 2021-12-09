@@ -1,4 +1,6 @@
 class GameObject {
+  float speed;
+
   PVector loc; //location
   PVector vel; //velocity
   float size;
@@ -8,10 +10,15 @@ class GameObject {
   float delay, delaycount;
 
   color c;
-  int hp, shield;
-  int speed;
-  int xp;
+  
+  
+  int hp, shield, hpcap;
+  int xp, xpcap;
+  int dmgbonus;
+  
   float pushx, pushy;
+  int level;
+
 
 
 

@@ -9,10 +9,5 @@ void intro() {
 
 
 
-  //BUTTON STUFF====================================
-  if (mousePressed) hadPressed = true;
-  if (hadPressed == true && !mousePressed) {
-    mouseReleased = true;
-    hadPressed = false;
-  } else if (mouseReleased) mouseReleased = false;
+ 
 }

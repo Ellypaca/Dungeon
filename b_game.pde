@@ -3,8 +3,9 @@ void game() {
   drawRoom();
   drawGameObjects();
   //drawLightLayer();
- // drawMiniMap();
+  drawMiniMap();
   drawInterface();
+  buttonStuff();
 
   //Pause/menu button
   drawPause();
@@ -64,11 +65,10 @@ void drawRoom() {
   for (int i = 0; i < 48; i++) {
     image(floor, x, y);
     x = x + 80;
-   if (x >  680){
-    x = 120; 
-    y = y+80;
-   }
-    
+    if (x >  680) {
+      x = 120; 
+      y = y+80;
+    }
   }
 
 
@@ -132,6 +132,7 @@ void drawMiniMap() {
 void drawPause() {
   if (pkey) {
     mode = PAUSE;
+    pkey = false;
   }
 }
 
@@ -141,4 +142,6 @@ void drawInterface() {
   fill(White);
   textSize(60);
   text("HP:"+ myHero.hp, 100, 500);
+  text("EXP:"+ myHero.xp + " of " + myHero.xpcap, 100, 550);
+  buttonStuff();
 }
