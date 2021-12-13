@@ -7,6 +7,8 @@ void game() {
   drawInterface();
   buttonStuff();
 
+
+
   //Pause/menu button
   drawPause();
 }
@@ -84,8 +86,11 @@ void drawGameObjects() {
 
       myObj.show();
       myObj.act();
-      if (myObj.hp <=0) {
+      if (myObj.hp <=0 ) {
         myObjects.remove(i);
+        if (!(myObj instanceof Bullet || myObj instanceof Particle)) {
+          myObjects.add(new Particle(myObj.loc.x, myObj.loc.y, myObj.vel.x, myObj.vel.y, myObj.roomX, myObj.roomY));
+        }
         i--;
       }
     }
@@ -111,7 +116,7 @@ void drawMiniMap() {
   while (y < map.height) {
     color c  = map.get(x, y);
     if (c != White) c = Black;
-    fill(c);
+    fill(c, 80);
     square(50+x*10, 50+y*10, size);
     x = x+1;
 

@@ -51,12 +51,12 @@ class Enemy extends GameObject {
             hp = hp-hp%10;
 
             if (myHero.delaycount > myHero.delay) {
-              myHero.hp = myHero.hp+2;
+              myHero.hp = myHero.hp+int((0.2*((obj.vel.mag()+ myHero.dmgbonus))));
               myHero.delaycount = 0;
             }
           }
-    
-    
+
+
 
 
           //hp = hp - ((Bullet) obj).damage; //downcasting
@@ -114,6 +114,8 @@ class Follower extends Enemy {
 
   void show() {
     FollowerAction.show(loc.x, loc.y, size/2, size*1.2);
+
+    noStroke();
     fill(White);
     rectMode(CORNER);
     rect(loc.x-20, loc.y-50, 40, 20);
@@ -169,6 +171,7 @@ class Anventia extends Enemy {
     fill(Black);
     textSize(20);
     text(hp, loc.x, loc.y);
+
   }
 
   void act() {
@@ -265,6 +268,7 @@ class Spawner extends Enemy {
 }
 
 class Dragon extends Enemy {    //boss
+  int action;
 
   Dragon (int x, int y) {
     super(750, 150, x, y);
@@ -276,7 +280,7 @@ class Dragon extends Enemy {    //boss
     stroke(Black);
     strokeWeight(3);
     fill(#953708); //mahogany
-    circle(loc.x, loc.y, size);
+    square(loc.x, loc.y, size);
     fill(Gray);
     textSize(20);
     text(hp, loc.x, loc.y);  //make hp bar later
@@ -286,8 +290,33 @@ class Dragon extends Enemy {    //boss
   void act() {
     super.act();
 
-    shotTimer++;
     if (shotTimer >= threshold) {
+      action = int(random(0, 4));
+    } else {
+      shotTimer++;
+    }
+
+    switch (action) {
+    case 1:
+      FireBreath();
+      break;
+
+    case 2: 
+      Stomp();
+      break;
+       
     }
   }
+
+
+  void FireBreath() {
+  }
+  
+  
+  void Stomp(){
+    
+    
+  }
+  
+  
 }

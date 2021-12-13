@@ -35,11 +35,6 @@ class GameObject {
     loc.add(vel);
 
 
-
-
-
-
-
     if ( loc.y > height*0.9-size/2) loc.y = height*0.9-size/2;
     if ( loc.y < height*0.1+size/2) loc.y = height*0.1+size/2;
     if ( loc.x > width*0.9-size/2) loc.x = width*0.9-size/2;

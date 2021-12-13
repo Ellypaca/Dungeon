@@ -24,21 +24,26 @@ void pause() {
 
 
 
-    if (Attack.clicked && myHero.lvlpoints > 0) {
-      myHero.dmgbonus = myHero.dmgbonus + 5;
-      myHero.lvlpoints--;
-    }
+  if (Attack.clicked && myHero.lvlpoints > 0) {
+    myHero.dmgbonus = myHero.dmgbonus + 5;
+    myHero.lvlpoints--;
+  }
 
-    if (Health.clicked && myHero.lvlpoints > 0) {
-      myHero.hpcap = myHero.hpcap + 20;
-      println(myHero.hpcap, myHero.lvlpoints);
-      myHero.lvlpoints--;
-    }
-    if (Speed.clicked && myHero.lvlpoints > 0) {
-      myHero.speed = myHero.speed + 0.5;
-      myHero.lvlpoints--;
-      println(myHero.speed, myHero.lvlpoints);
-    }
+  if (Health.clicked && myHero.lvlpoints > 0) {
+    myHero.hpcap = myHero.hpcap + 20;
+    myHero.lvlpoints--;
+  }
+  if (Speed.clicked && myHero.lvlpoints > 0) {
+    myHero.speed = myHero.speed + 0.5;
+    myHero.lvlpoints--;
+  }
+
+  fill(Black);
+  text("Total Attack: " + (myHero.dmgbonus+myHero.myWeapon.dmg), width/2, height/2-80);
+  text("Total Health: " + myHero.hpcap, width/2, int(height/4)+220);
+  text("Total Speed: " + myHero.speed, width/2, int(height/4) + 370);
+
+
 
 
 

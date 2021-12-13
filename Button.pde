@@ -43,6 +43,7 @@ class Button {
     }
     textSize(w/8);
     text(text, x, y);
+    released = false;
 
     if (mousePressed == true) pressed = true; 
     if (mousePressed == false && pressed == true) {
