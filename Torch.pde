@@ -1,5 +1,0 @@
-class Torch extends GameObject{
-  
-  
-  
-}
