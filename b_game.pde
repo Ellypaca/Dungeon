@@ -2,14 +2,15 @@ void game() {
   frameRate(50);
   drawRoom();
   drawGameObjects();
-  //drawLightLayer();
+ // drawLightLayer();
   drawMiniMap();
   drawInterface();
   buttonStuff();
+  cleanup();
 
 
 
-  //Pause/menu button
+  //Poause/menu button
   drawPause();
 }
 
@@ -88,11 +89,21 @@ void drawGameObjects() {
       myObj.act();
       if (myObj.hp <=0 ) {
         myObjects.remove(i);
-        if (!(myObj instanceof Bullet || myObj instanceof Particle)) {
-          myObjects.add(new Particle(myObj.loc.x, myObj.loc.y, myObj.vel.x, myObj.vel.y, myObj.roomX, myObj.roomY));
+        if (!(myObj instanceof Bullet || myObj instanceof Particle || myObj instanceof DroppedW
+          || myObj instanceof DroppedHP || myObj instanceof Message || myObj instanceof EnemyBullet)) {
+          //println(myObj);
+
+          int n = int(random(40, 50));//total number of particles;
+          int j = 0; //counter
+          while ( j< n) {
+            j++;
+            myObjects.add(new Particle(myObj.loc.x, myObj.loc.y, 3, 3, myObj.roomX, myObj.roomY, 10, myObj.c));
+          }
         }
         i--;
       }
+    }  else if (myObj instanceof HealStation){
+      myObj.act();
     }
   }
 }
@@ -141,6 +152,17 @@ void drawPause() {
   }
 }
 
+//void hpbar(){
+//    rect(loc.x-20, loc.y-40, 40, 10);
+//    if (hp >= hpcap/4)    clr = BrightGreen;
+//    if (hp <= hpcap/5) clr = mapYellow;
+//    if (hp <= hpcap/7) clr = Red;
+//    if (invincible) clr = Gold;
+//    fill(clr);
+//    rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
+  
+//}
+
 
 
 void drawInterface() {
@@ -149,4 +171,16 @@ void drawInterface() {
   text("HP:"+ myHero.hp, 100, 500);
   text("EXP:"+ myHero.xp + " of " + myHero.xpcap, 100, 550);
   buttonStuff();
+}
+
+void cleanup() {
+  for (int i = 0; i < myObjects.size(); i++ ) {
+    GameObject obj = myObjects.get(i);
+    if (obj instanceof Bullet || obj instanceof Message) {
+      if (!myHero.inRoomWith(obj)) {
+        myObjects.remove(i);
+        i--;
+      }
+    }
+  }
 }

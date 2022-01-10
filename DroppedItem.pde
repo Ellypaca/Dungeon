@@ -5,7 +5,7 @@ class DroppedW extends GameObject {
 
   DroppedW(float x, float y, int rx, int ry) {
     type = GUN;
-    WeaponN = int(random(0, 3));
+    WeaponN = int(random(0, 4));
 
     switch (WeaponN) {
     case 0:
@@ -18,6 +18,14 @@ class DroppedW extends GameObject {
 
     case 2:
       w = new Wifesteal();
+      break;
+
+    case 3:
+      w = new Mage();
+      break;
+
+    case 4:
+      w = new Pierce();
       break;
     }
 
@@ -55,7 +63,11 @@ class DroppedHP extends GameObject {
   DroppedHP(float x, float y, int rx, int ry) {
     type = HP;
     hp = 1; 
-    loc = new PVector(x, y);
+
+    pushx = random(-50, 50);
+    pushy = random(-50, 50);
+
+    loc = new PVector(x+pushx, y+pushy);
     vel = new PVector(0, 0);
     size = 40;
     roomX = rx;

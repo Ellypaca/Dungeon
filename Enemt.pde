@@ -70,7 +70,7 @@ class Enemy extends GameObject {
             if (xp != 0) { //spawned enemies give 0 exp
               myObjects.add(new DroppedW(loc.x, loc.y, roomX, roomY)); 
               myObjects.add(new DroppedHP(loc.x, loc.y, roomX, roomY));
-              myObjects.add(new Message (loc, "+"+xp, 50, roomX, roomY, White));
+              myObjects.add(new Message (loc, "+"+xp, 50, roomX, roomY, White, 0.3));
 
               myHero.xp = myHero.xp + xp;
             }
@@ -88,25 +88,27 @@ class Enemy extends GameObject {
 //Enemy Follower
 class Follower extends Enemy {
   AnimatedGIF FollowerAction;
-  float barsizex, barsizey;
+  float scale;
 
 
   Follower(int x, int y) {
     super(FOLLOWER_HP, FOLLOWER_SIZE, x, y);
+    scale = 40;
 
     xp = 5;
     FollowerAction = SkeleLeft;
+    c = White;
   }
 
 
   Follower(int x, int y, float lx, float ly) {
-
     super(FOLLOWER_HP-20, FOLLOWER_SIZE, x, y); //make them a bit squishier
-
+    scale  = 50;
 
     loc.x = lx;
     loc.y = ly;
     FollowerAction = SkeleLeft;
+    c = White;
 
     xp = 0;
   }
@@ -115,15 +117,20 @@ class Follower extends Enemy {
   void show() {
     FollowerAction.show(loc.x, loc.y, size/2, size*1.2);
 
+
+    //bar background
     noStroke();
     fill(White);
     rectMode(CORNER);
     rect(loc.x-20, loc.y-50, 40, 20);
 
+
+    //health
     fill(BrightGreen);
-    rect(loc.x-20, loc.y-50, (40*hp)/100, 20);
+    rect(loc.x-20, loc.y-50, (scale*hp)/100, 20);
     rectMode(CENTER);
 
+    //text
     fill(Black);
     strokeWeight(2);
     textSize(20);
@@ -157,21 +164,26 @@ class Follower extends Enemy {
 
 //untraceable 
 class Anventia extends Enemy {
+  AnimatedGIF AnventiaAction;
 
   Anventia (int x, int y) {
     super(ANVENTIA_HP, ANVENTIA_SIZE, x, y);
     loc =  new PVector(ANVENTIA_LOC_X, ANVENTIA_LOC_Y); //so it doesnt instantly jump you
     xp = 10;
+    AnventiaAction = GreenSlime;
+    c = Green;
   }
 
   void show() {
-    noStroke();
-    fill(Gray);
-    circle(loc.x, loc.y, size);
+    //noStroke();
+    //fill(Gray);
+    //circle(loc.x, loc.y, size);
+
+    AnventiaAction.show(loc.x, loc.y-8, 1.4*size, 1.4*size);
+
     fill(Black);
     textSize(20);
-    text(hp, loc.x, loc.y);
-
+    text(hp, loc.x, loc.y-30);
   }
 
   void act() {
@@ -181,6 +193,9 @@ class Anventia extends Enemy {
 
     if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= 100) {
       vel.setMag(6);
+      AnventiaAction = RedSlime;
+    } else {
+      AnventiaAction = GreenSlime;
     }
   }
 }
@@ -273,7 +288,7 @@ class Dragon extends Enemy {    //boss
   Dragon (int x, int y) {
     super(750, 150, x, y);
     threshold = 150;
-    xp = 200;
+    xp = 300;
   }
 
   void show() {
@@ -304,19 +319,19 @@ class Dragon extends Enemy {    //boss
     case 2: 
       Stomp();
       break;
-       
     }
   }
 
 
   void FireBreath() {
   }
-  
-  
-  void Stomp(){
-    
-    
+
+
+  void Stomp() {
   }
-  
-  
+}
+
+
+
+void healthbar() {
 }

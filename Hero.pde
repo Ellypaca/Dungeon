@@ -1,12 +1,10 @@
 class Hero extends GameObject {
-  float speed;
   boolean invincible;
   int invinTimer;
   color clr;
   AnimatedGIF currentAction;
   PImage DefaultAction;
-  
-  int heroxp, xpcap;
+  int lvlpoints;
 
   Weapon myWeapon;
 
@@ -21,22 +19,28 @@ class Hero extends GameObject {
     invinTimer = 60;
     currentAction = manDown;
     DefaultAction = ManU;
+    lvlpoints = 5;
 
+
+    hpcap = HP_CAP;
+    hp = 100;
 
 
     //other stuff
     delay = 0.2;
     delaycount = 0;
+    dmgbonus = 0;
 
     //EXP
+    lvlpoints = 5;
     xpcap = XP_CAP;
+
 
     //ArrayList<Weapon> Weapons;
     //myWeapon = new Bow();
   }
 
   void show() {
-
     fill(clr);
     noStroke();
     //circle(loc.x, loc.y, size);
@@ -48,16 +52,29 @@ class Hero extends GameObject {
     }
 
 
-    //healthbar
+    //HEALTH======================
+    if (hp>hpcap) {
+      hp = hpcap;
+    }
     fill(Black);
     rectMode(CORNER);
+
     rect(loc.x-20, loc.y-40, 40, 10);
-    if (hp >= HP_CAP/4)    clr = BrightGreen;
-    if (hp <= HP_CAP/5) clr = Yellow;
-    if (hp <= HP_CAP/7) clr = Red;
+    if (hp >= hpcap/4)    clr = BrightGreen;
+    if (hp <= hpcap/5) clr = mapYellow;
+    if (hp <= hpcap/7) clr = Red;
     if (invincible) clr = Gold;
     fill(clr);
     rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
+
+    //SHIELDS
+    if (hp > hpcap/2) {
+      shield = hpcap - hp;
+    }
+
+    //fill(White);
+    //rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
+
     rectMode(CENTER);
   }
 
@@ -66,19 +83,28 @@ class Hero extends GameObject {
     super.act();
 
 
+    if (xp >= xpcap) {
+      xpcap = xpcap + 5; 
+      xp = 0;
+      lvlpoints++;
+      level++;
+    }
+
+    //testing 
+    if (bkey) {
+      roomX = 4;
+      roomY = 3;
+    }
+
+
 
     //MOVEMENT=======================================
     //Up
     if (wkey) vel.y= -speed;
-
     //Down
-    if (skey) {
-      vel.y= speed;
-    }
-
+    if (skey) vel.y= speed;
     //Left
     if (akey) vel.x= -speed;
-
     //Right
     if (dkey) vel.x=speed;
 
@@ -148,15 +174,7 @@ class Hero extends GameObject {
 
 
     //BUFFS
-    if (invincible) {
-      if (invinTimer == 0) {
-        invinTimer = 60;
-        clr = BrightGreen;
-        invincible = false;
-      }
-      invinTimer--;
-    }
-
+    invincible();
 
     //DELAYS========
     //healing delay
@@ -176,8 +194,8 @@ class Hero extends GameObject {
           if (invincible == false && !(myObj instanceof Spawner) && !(myObj instanceof Turret)) {
             if (myObj instanceof Follower) hp = hp - 10;  //clean up later
             if (myObj instanceof Anventia) {
-              myObj.hp = 0;
               hp = hp - 40;
+              myObj.hp = 0;
             }
 
             if (myObj instanceof EnemyBullet) {
@@ -196,8 +214,7 @@ class Hero extends GameObject {
         }
       }
 
-
-
+      //PICKING UP THINGS=============
       if (myObj instanceof DroppedW && isCollidingWith(myObj)) {
         DroppedW wpn = (DroppedW) myObj;
         //if (wpn.type == GUN) {
@@ -206,6 +223,7 @@ class Hero extends GameObject {
         //}
       }
 
+      //HEALING======================
       if (myObj instanceof DroppedHP && isCollidingWith(myObj)) {
         DroppedHP HP = (DroppedHP) myObj;
         HP.hp = 0;
@@ -215,21 +233,41 @@ class Hero extends GameObject {
         }
       }
 
+      if (myObj instanceof HealStation && isCollidingWith(myObj)) {
+        HealStation shp = (HealStation) myObj;
+        shp.heal();
+      }
+
+
+
+
+
 
       i++;
     }
+
+
+
+
 
     //DYING
     if (hp <=0) {
       mode = GAMEOVER;
     }
+  }
 
-    if (hp>HP_CAP) {
-      hp = HP_CAP;
+
+
+
+
+  void invincible() {
+    if (myHero.invincible) {
+      if (myHero.invinTimer == 0) {
+        myHero.invinTimer = 60;
+        myHero.clr = BrightGreen;
+        myHero.invincible = false;
+      }
+      myHero.invinTimer--;
     }
   }
-}
-
-
-void damage() {
 }

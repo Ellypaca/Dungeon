@@ -1,0 +1,4 @@
+class Shopkeeper extends GameObject{
+  
+  
+}

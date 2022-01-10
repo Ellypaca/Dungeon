@@ -15,6 +15,8 @@ void keyPressed() {
   if (key == ' ') {
     spacekey = true;
   }
+  if (key == 'B' || key == 'b') bkey = true;
+
   //   if (keyCode == 'SHIFT') shiftkey = true;
 }
 
@@ -32,7 +34,18 @@ void keyReleased() {
   if (key == 'A' || key == 'a') akey = false;
   if (key == 'D' || key == 'd') dkey = false;
   if (key == 'P' || key == 'p') pkey = false;
+  if (key == 'B' || key == 'b') bkey = false;
+
 
   if (key == ' ') spacekey = false;
   // if (keyCode == 'SHIFT') shiftkey = false;
+}
+
+void buttonStuff() {
+  //BUTTON STUFF====================================
+  if (mousePressed) hadPressed = true;
+  if (hadPressed == true && !mousePressed) {
+    mouseReleased = true;
+    hadPressed = false;
+  } else if (mouseReleased) mouseReleased = false;
 }
