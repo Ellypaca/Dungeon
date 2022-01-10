@@ -6,7 +6,7 @@ class AnimatedGIF {
   float x, y, w, h;
   int rate;
 
-  AnimatedGIF(int nf, int r, String pre, String post) {
+  AnimatedGIF(int nf, int r, String pre, String post) {  //number frames, rate
     x = width/2;
     y = height/2;
     w = width;

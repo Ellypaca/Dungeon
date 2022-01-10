@@ -1,6 +1,10 @@
 void mousePressed() {
   if (mode == INTRO) {
     mode = GAME;
+  } else if (mode == GAMEOVER){
+    mode = INTRO;
+    setup();
+    draw();
   }
 }
 
@@ -16,6 +20,8 @@ void keyPressed() {
     spacekey = true;
   }
   if (key == 'B' || key == 'b') bkey = true;
+  if (key == 'Q' || key == 'q') qkey = true;
+
 
   //   if (keyCode == 'SHIFT') shiftkey = true;
 }
@@ -35,6 +41,8 @@ void keyReleased() {
   if (key == 'D' || key == 'd') dkey = false;
   if (key == 'P' || key == 'p') pkey = false;
   if (key == 'B' || key == 'b') bkey = false;
+  if (key == 'Q' || key == 'q') qkey = false;
+
 
 
   if (key == ' ') spacekey = false;

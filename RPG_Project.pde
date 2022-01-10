@@ -41,11 +41,11 @@ final int FOLLOWER_VEL = 2;
 //settings: weapons
 final int BOW_THR = 30;
 final int BOW_VEL = 5;
-final int BOW_BULLET_S = 10;
+final int BOW_BULLET_S = 50;
 
-final int MAGE_THR = 6;
-final int MAGE_VEL = 2;
-final int MAGE_BULLET_S = 20;
+final int MAGE_THR = 20;
+final int MAGE_VEL = 1;
+final int MAGE_BULLET_S = 40;
 
 final int AOE_THR = 20;
 final int AOE_VEL = 4;
@@ -63,8 +63,8 @@ final int PIERCE_BULLET_S = 10;
 final int HP_CAP = 200;
 final int XP_CAP = 50;
 
-//final int
-//final int
+final int FLOORX = 640;
+final int FLOORY = 480;
 //final int
 //final int
 //final int 
@@ -113,8 +113,9 @@ color Black = #000000;
 color White = #FFFFFF;
 color Green = #76B26E;
 color BrightGreen = #3EE807;
-color Gold = #F7C90C;
+color BYellow = #EDFF2E;
 color Steel = #908D8A;
+color LGray = #EDECEB;
 color mapPink = #ff00f2;
 color mapRed = #fa0000;
 color mapYellow = #fee606;
@@ -126,6 +127,7 @@ color mapAqua = #00FFFB;
 
 //FONTS
 PFont USA, USR;
+PFont Lemon, LemonB;
 
 //IMAGES
 PImage  map;
@@ -135,7 +137,10 @@ color northRoom, eastRoom, southRoom, westRoom;
 PImage floor;
 
 
-//GIFS
+//GIFS=======
+//SCREENS
+AnimatedGIF Elmo;
+
 //MAN
 AnimatedGIF manUp, manDown, manRight, manLeft;
 PImage ManU, ManD, ManR, ManL;
@@ -147,9 +152,11 @@ AnimatedGIF GreenSlime, RedSlime;
 
 //SPRITES
 PImage torch;
+AnimatedGIF portal;
+PImage Target;
 
 //bullets
-PImage AOEBullet, Arrow;
+PImage AOEBullet, Arrow, Arcane, LS;
 
 //OBJECTS
 ArrayList<GameObject> myObjects;
@@ -180,6 +187,8 @@ void setup() {
   //Fonts
   USA = createFont("UnfinishedScreamAlternative.ttf", 50);
   USR = createFont("UnfinishedScreamRegular.ttf", 50);
+  Lemon = createFont("LEMONMILK-Light.otf", 50);
+  LemonB = createFont("LEMONMILK-Medium.otf", 50);
 
   //Buttons
   PauseButton = new Button("Click here to resume", width/2, 300, 300, 100, Black, White );
@@ -195,6 +204,10 @@ void setup() {
   floor = loadImage("BetterFloor.png");
 
   //GIFs==========================
+  //INTRO
+  Elmo = new AnimatedGIF(8, 10, "data/Elmo/frame_", "_delay-0.1s.gif");
+
+
   //HERO
   manUp = new AnimatedGIF(4, 10, "data/Hero/_up/hero_up_", ".png");
   manRight = new AnimatedGIF(4, 10, "data/Hero/_right/hero_right_", ".png");
@@ -217,13 +230,17 @@ void setup() {
 
   //bullets
   AOEBullet = loadImage("data/Bullets/AOE_Bullet.png");
-  Arrow = loadImage("data/Bullets/Arrow.png");  
+  Arrow = loadImage("data/Bullets/Arrow.png");
+  Arcane = loadImage("data/Bullets/Arcane.png");
+  LS = loadImage("data/Bullets/LS Bullet.png");
 
 
 
   //Sprites
-  torch = loadImage("SmallTorch.png");
-  
+  torch = loadImage("data/Other Assets/SmallTorch.png");
+  portal = new AnimatedGIF(3, 10, "data/Other Assets/hole_", ".png");
+  Target = loadImage("data/Other Assets/Target.png");
+
 
   //Create Objects
   myHero = new Hero();
@@ -298,27 +315,23 @@ void setup() {
       myObjects.add(new Spawner(xx, yy));
       myObjects.add(new Spawner(xx, yy));
     }
-    
-    if(roomColour == mapPurple) {      //tps
+
+    if (roomColour == mapPurple) {      //tps
       myObjects.add(new TP(xx, yy));
-      
-      
     }
 
     if (roomColour == mapBlue) {        //final boss room
       myObjects.add(new Dragon(xx, yy));
     }
-    
-    if (roomColour == mapAqua){        //shopkeeper!
-      
-      
+
+    if (roomColour == mapAqua) {        //shopkeeper!
     }
-    
+
     //if((xx == 6 && yy == 3) || (xx == 8 && yy ==5)){
-      
-      
+
+
     //}
-    
+
 
 
     xx++;

@@ -2,12 +2,12 @@ void game() {
   frameRate(50);
   drawRoom();
   drawGameObjects();
- // drawLightLayer();
+  drawLightLayer();
   drawMiniMap();
   drawInterface();
   buttonStuff();
   cleanup();
-
+  //myHero.hp = 0;
 
 
   //Poause/menu button

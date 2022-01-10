@@ -1,6 +1,6 @@
 class Hero extends GameObject {
   boolean invincible;
-  int invinTimer;
+  int invinTimer, shieldtimer;
   color clr;
   AnimatedGIF currentAction;
   PImage DefaultAction;
@@ -14,16 +14,17 @@ class Hero extends GameObject {
     roomX = 1;
     roomY = 1;
     size = 40.0;
-    myWeapon = new AOE(); //Bow, mage, AOE, wifesteal
+    myWeapon = new Bow(); //Bow, mage, AOE, wifesteal
     clr= BrightGreen;
     invinTimer = 60;
     currentAction = manDown;
     DefaultAction = ManU;
     lvlpoints = 5;
 
-
+    //health
     hpcap = HP_CAP;
     hp = 100;
+    shieldtimer = 300;
 
 
     //other stuff
@@ -34,6 +35,8 @@ class Hero extends GameObject {
     //EXP
     lvlpoints = 5;
     xpcap = XP_CAP;
+
+
 
 
     //ArrayList<Weapon> Weapons;
@@ -63,14 +66,34 @@ class Hero extends GameObject {
     if (hp >= hpcap/4)    clr = BrightGreen;
     if (hp <= hpcap/5) clr = mapYellow;
     if (hp <= hpcap/7) clr = Red;
-    if (invincible) clr = Gold;
+    if (invincible) clr = BYellow;
     fill(clr);
     rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
 
     //SHIELDS
     if (hp > hpcap/2) {
-      shield = hpcap - hp;
+      shield = hp - hpcap/2 ;
+      fill(LGray);
+      rect(loc.x+20, loc.y-40, (40*shield)/100, 10);
     }
+
+    if (shield > 0) {
+      shieldtimer--;
+      if (shieldtimer <= 0) {
+        hp = hp - shield;
+        shield = 0;
+        shieldtimer = 300;
+      }
+    }
+
+    fill(White);
+    textFont(Lemon);
+    textSize(20);
+    text(hp-shield, loc.x, loc.y - 40);
+    textFont(USA);
+
+
+
 
     //fill(White);
     //rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
@@ -170,6 +193,11 @@ class Hero extends GameObject {
       myWeapon.shoot();
     }
 
+    //if (qkey) {
+    //  myWeapon.skill();
+    //}
+
+
 
 
 
@@ -199,7 +227,11 @@ class Hero extends GameObject {
             }
 
             if (myObj instanceof EnemyBullet) {
-              hp = hp - 5; 
+              if (shield > 0 ) {
+                hp = hp - 2;
+              } else {
+                hp = hp - 5;
+              }
               myObj.hp = 0;
             }
 
@@ -208,7 +240,7 @@ class Hero extends GameObject {
               hp = hp - 20;
             }
 
-            clr = Gold;
+            clr = BYellow;
             invincible = true;
           }
         }
@@ -236,6 +268,13 @@ class Hero extends GameObject {
       if (myObj instanceof HealStation && isCollidingWith(myObj)) {
         HealStation shp = (HealStation) myObj;
         shp.heal();
+      }
+
+
+      //TP===========
+      if (myObj instanceof TP && isCollidingWith(myObj)) {
+        TP portal = (TP) myObj;
+        portal.move();
       }
 
 

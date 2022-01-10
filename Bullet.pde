@@ -50,24 +50,30 @@ class Bullet extends GameObject {
   void show() {
     noStroke();
     fill(colour);
-    ellipse(loc.x, loc.y, size, size);
 
 
-
+    pushMatrix();
+    translate(loc.x, loc.y);
+    rotate(Arrotate);
     switch (myHero.myWeapon.WeaponNum) {
     case 0:
-      pushMatrix();
-      translate(loc.x, loc.y);
-      rotate(Arrotate);
-      image(Arrow, 0, 0);
-      popMatrix();
-
+      image(Arrow, 0, 0, size, size);
       break;
 
     case 1: 
-      image(AOEBullet, loc.x, loc.y, 20, 20);
+      image(AOEBullet, 0, 0, size, size);
+      break;
+
+    case 2:
+      image(LS, 0, 0, size, size);
+      break;
+      
+
+    case 3:
+      image(Arcane, 0, 0, size, size);
       break;
     }
+    popMatrix();
   }
 
   void act() {
