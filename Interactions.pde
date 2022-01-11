@@ -1,7 +1,15 @@
 void mousePressed() {
   if (mode == INTRO) {
     mode = GAME;
-  } else if (mode == GAMEOVER){
+  } else if (mode == GAME) {
+    if (dist(mouseX, mouseY, 750, 50 ) <= 25) {
+      mode = PAUSE;
+    }
+  } else if (mode == PAUSE) {
+    if (dist(mouseX, mouseY, 750, 50 ) <= 25) {
+      mode = GAME;
+    }
+  } else if (mode == GAMEOVER) {
     mode = INTRO;
     setup();
     draw();

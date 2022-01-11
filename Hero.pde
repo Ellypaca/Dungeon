@@ -5,16 +5,17 @@ class Hero extends GameObject {
   AnimatedGIF currentAction;
   PImage DefaultAction;
   int lvlpoints;
-
+  float scap;
+  int skillTimer;
   Weapon myWeapon;
 
   Hero() {
     super();
-    speed = 5;
+    speed = scap = 5;
     roomX = 1;
     roomY = 1;
     size = 40.0;
-    myWeapon = new Bow(); //Bow, mage, AOE, wifesteal
+    myWeapon = new Mage(); //Bow, mage, AOE, wifesteal
     clr= BrightGreen;
     invinTimer = 60;
     currentAction = manDown;
@@ -115,8 +116,8 @@ class Hero extends GameObject {
 
     //testing 
     if (bkey) {
-      roomX = 4;
-      roomY = 3;
+      roomX = 5;
+      roomY = 5;
     }
 
 
@@ -137,7 +138,7 @@ class Hero extends GameObject {
     if (!akey && !dkey) vel.x = vel.x*0.75;
 
     //not too fast
-    if (vel.mag()> speed) vel.setMag(speed);
+    if (vel.mag()> scap) vel.setMag(scap);
 
     //Action
     if (abs(vel.y) > abs(vel.x)) {
@@ -191,11 +192,17 @@ class Hero extends GameObject {
     if (spacekey) {
       myWeapon.show();
       myWeapon.shoot();
+    } else {
+      myHero.speed = myHero.scap;
     }
 
-    //if (qkey) {
-    //  myWeapon.skill();
-    //}
+
+    skillTimer++;
+    if (qkey && skillTimer >= 100) {
+      myWeapon.skill();
+      myHero.hp -= int(myHero.hp*0.2);
+      skillTimer = 0;
+    }
 
 
 
@@ -272,11 +279,10 @@ class Hero extends GameObject {
 
 
       //TP===========
-      if (myObj instanceof TP && isCollidingWith(myObj)) {
+      if (myObj instanceof TP) { 
         TP portal = (TP) myObj;
-        portal.move();
-      }
-
+        portal.move(roomX, roomY);
+      } 
 
 
 

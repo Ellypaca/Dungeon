@@ -60,9 +60,9 @@ class Enemy extends GameObject {
 
 
           //hp = hp - ((Bullet) obj).damage; //downcasting
-          if (myHero.myWeapon.WeaponNum != 3) {
+          if (myHero.myWeapon.WeaponNum == 0 || myHero.myWeapon.WeaponNum == 1 ) {
             obj.hp = 0;
-          } else {
+          } else if (myHero.myWeapon.WeaponNum == 2 || myHero.myWeapon.WeaponNum == 3 ) {
             obj.hp--;
           }
 
@@ -246,6 +246,16 @@ class Turret extends Enemy {
     xp = 20;
   }
 
+  void show() {
+    stroke(Black);
+    strokeWeight(2);
+    fill(Steel);
+    circle(loc.x, loc.y, size);
+    fill(Black);
+    textSize(20);
+    text(hp, loc.x, loc.y);
+  }
+
 
   void act() {
     super.act();
@@ -284,6 +294,7 @@ class Spawner extends Enemy {
 
 class Dragon extends Enemy {    //boss
   int action;
+  int actiontimer;
 
   Dragon (int x, int y) {
     super(750, 150, x, y);
@@ -305,10 +316,11 @@ class Dragon extends Enemy {    //boss
   void act() {
     super.act();
 
-    if (shotTimer >= threshold) {
+    if (actiontimer >= threshold) {
       action = int(random(0, 4));
+      action = 1;
     } else {
-      shotTimer++;
+      actiontimer++;
     }
 
     switch (action) {
@@ -324,6 +336,14 @@ class Dragon extends Enemy {    //boss
 
 
   void FireBreath() {
+    shotTimer++;
+    if (shotTimer >= threshold) {
+      aimVector = new PVector(myHero.loc.x-loc.x, myHero.loc.y-loc.y);
+      myObjects.add(new EnemyBullet(loc.x, loc.y, aimVector, Red, 10));
+      //myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 10));
+
+      shotTimer = 0;
+    }
   }
 
 

@@ -34,7 +34,7 @@ void pause() {
     myHero.lvlpoints--;
   }
   if (Speed.clicked && myHero.lvlpoints > 0) {
-    myHero.speed = myHero.speed + 0.5;
+    myHero.scap = myHero.scap + 0.5;
     myHero.lvlpoints--;
   }
 
@@ -52,4 +52,6 @@ void pause() {
     mode = GAME;
     pkey = false;
   }
+
+  PauseSymbol.show(50);
 }

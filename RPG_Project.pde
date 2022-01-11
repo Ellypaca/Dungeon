@@ -52,7 +52,7 @@ final int AOE_VEL = 4;
 final int AOE_BULLET_S = 20;
 
 final int WIFESTEAL_THR = 40;
-final int WIFESTEAL_VEL = 10;
+final int WIFESTEAL_VEL = 5;
 final int WIFESTEAL_BULLET_S = 40;
 
 final int PIERCE_THR = 30;
@@ -87,6 +87,7 @@ int GAMEOVER = 3;
 //BUTTONS
 boolean hadPressed;
 boolean mouseReleased;
+Button PauseSymbol;
 Button PauseButton;
 Button UnpauseButton;
 Button Upgrades;
@@ -148,6 +149,7 @@ PImage ManU, ManD, ManR, ManL;
 //ENEMY
 AnimatedGIF SkeleUp, SkeleDown, SkeleRight, SkeleLeft;
 AnimatedGIF GreenSlime, RedSlime;
+AnimatedGIF DragUp, DragDown, DragLeft, DragRight;
 
 
 //SPRITES
@@ -191,6 +193,7 @@ void setup() {
   LemonB = createFont("LEMONMILK-Medium.otf", 50);
 
   //Buttons
+  PauseSymbol = new Button("P", 750, 50, 50, 50, Black, White );
   PauseButton = new Button("Click here to resume", width/2, 300, 300, 100, Black, White );
   Upgrades = new Button("Upgrades", width/2, height/2 + int(height/3), 400, 100, Mauve, Black);
   Shop = new Button("Shop", width/2, height/2, 400, 100, Mauve, Black);
@@ -217,7 +220,8 @@ void setup() {
   ManR = loadImage("data/Hero/_right/hero_right_0.png");
   ManL = loadImage("data/Hero/_left/hero_left_0.png");
   ManD = loadImage("data/Hero/_down/hero_down_0.png");
-  //ENEMY
+
+  //ENEMY===================
 
   //FOLLOWER
   SkeleUp = new AnimatedGIF(4, 10, "data/skeleton/SkeleUp/Skeleton_", ".png");
@@ -226,6 +230,16 @@ void setup() {
   SkeleRight = new AnimatedGIF(4, 10, "data/skeleton/SkeleRight/Skeleton_", ".png");
   GreenSlime = new AnimatedGIF(5, 5, "data/slime/GSlime/Slime_", ".png");
   RedSlime = new AnimatedGIF(5, 5, "data/slime/RSlime/RSlime", ".gif");
+
+
+  //Dragon
+  DragUp = new AnimatedGIF(3, 10, "data/green dragon/Up/greenDragon_", ".png");
+  DragDown = new AnimatedGIF(3, 10, "data/green dragon/Down/greenDragon_", ".png");
+  DragLeft = new AnimatedGIF(3, 10, "data/green dragon/Left/greenDragon_", ".png");
+  DragRight = new AnimatedGIF(3, 10, "data/green dragon/Right/greenDragon_", ".png");
+
+
+
 
 
   //bullets
@@ -325,6 +339,7 @@ void setup() {
     }
 
     if (roomColour == mapAqua) {        //shopkeeper!
+      myObjects.add(new TP(xx, yy));
     }
 
     //if((xx == 6 && yy == 3) || (xx == 8 && yy ==5)){

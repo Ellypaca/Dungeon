@@ -150,6 +150,9 @@ void drawPause() {
     mode = PAUSE;
     pkey = false;
   }
+  
+  PauseSymbol.show(50);
+  
 }
 
 //void hpbar(){
