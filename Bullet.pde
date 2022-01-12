@@ -101,6 +101,7 @@ class EnemyBullet extends GameObject {
   color colour;
   int damage;
   int bulletSpeed;
+  boolean boss;
 
   EnemyBullet() {
     hp = 1;
@@ -108,7 +109,8 @@ class EnemyBullet extends GameObject {
     damage = 50;
   }
 
-  EnemyBullet(float x, float y, PVector a, int c, int s) {
+  EnemyBullet(float x, float y, PVector a, int c, int s, boolean b) {
+    boss = b;
     loc = new PVector(x, y);
     aimVector = a;
     size = s;
@@ -118,6 +120,9 @@ class EnemyBullet extends GameObject {
     roomX = myHero.roomX;
     roomY = myHero.roomY;
   }
+  
+  
+  
 
   void show() {
     noStroke();

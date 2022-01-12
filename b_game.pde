@@ -91,7 +91,6 @@ void drawGameObjects() {
         myObjects.remove(i);
         if (!(myObj instanceof Bullet || myObj instanceof Particle || myObj instanceof DroppedW
           || myObj instanceof DroppedHP || myObj instanceof Message || myObj instanceof EnemyBullet)) {
-          //println(myObj);
 
           int n = int(random(40, 50));//total number of particles;
           int j = 0; //counter
@@ -100,9 +99,15 @@ void drawGameObjects() {
             myObjects.add(new Particle(myObj.loc.x, myObj.loc.y, 3, 3, myObj.roomX, myObj.roomY, 10, myObj.c));
           }
         }
+
+        if (myObj instanceof Dragon ) {
+          myHero.roomX = 1;
+          myHero.roomY = 1;
+          loadEnemies();
+        }
         i--;
       }
-    }  else if (myObj instanceof HealStation){
+    } else if (myObj instanceof HealStation) {
       myObj.act();
     }
   }
@@ -150,9 +155,8 @@ void drawPause() {
     mode = PAUSE;
     pkey = false;
   }
-  
+
   PauseSymbol.show(50);
-  
 }
 
 //void hpbar(){
@@ -163,7 +167,7 @@ void drawPause() {
 //    if (invincible) clr = Gold;
 //    fill(clr);
 //    rect(loc.x-20, loc.y-40, (40*hp)/100, 10);
-  
+
 //}
 
 
@@ -171,7 +175,7 @@ void drawPause() {
 void drawInterface() {
   fill(White);
   textSize(60);
-  text("HP:"+ myHero.hp, 100, 500);
+  // text("HP:"+ myHero.hp, 100, 500);
   text("EXP:"+ myHero.xp + " of " + myHero.xpcap, 100, 550);
   buttonStuff();
 }

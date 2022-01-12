@@ -38,6 +38,8 @@ final int FOLLOWER_HP = 100;
 final int FOLLOWER_SIZE = 50;
 final int FOLLOWER_VEL = 2;
 
+final int DRAGON_VEL = 1;
+
 //settings: weapons
 final int BOW_THR = 30;
 final int BOW_VEL = 5;
@@ -155,7 +157,6 @@ AnimatedGIF DragUp, DragDown, DragLeft, DragRight;
 //SPRITES
 PImage torch;
 AnimatedGIF portal;
-PImage Target;
 
 //bullets
 PImage AOEBullet, Arrow, Arcane, LS;
@@ -163,6 +164,7 @@ PImage AOEBullet, Arrow, Arcane, LS;
 //OBJECTS
 ArrayList<GameObject> myObjects;
 Hero myHero;
+
 //final int 
 
 
@@ -253,13 +255,14 @@ void setup() {
   //Sprites
   torch = loadImage("data/Other Assets/SmallTorch.png");
   portal = new AnimatedGIF(3, 10, "data/Other Assets/hole_", ".png");
-  Target = loadImage("data/Other Assets/Target.png");
+
 
 
   //Create Objects
   myHero = new Hero();
   myObjects = new ArrayList<GameObject>(1000);
   myObjects.add(myHero);
+  
 
 
 
@@ -287,6 +290,27 @@ void setup() {
   mode = INTRO; //INTRO
 
   //loading enemies from  map===============
+  loadEnemies();
+  
+}
+
+void draw() {
+  if (mode == INTRO) {
+    intro();
+  } else if (mode == GAME) {
+    game();
+  } else if (mode == PAUSE) {
+    pause();
+  } else if (mode == GAMEOVER) {
+    gameover();
+  } else {
+    println("Error: Mode =" + mode);
+  }
+}
+
+
+
+void loadEnemies(){
   int xx = 0;
   int yy = 0;
   while (yy < map.height) {
@@ -322,10 +346,7 @@ void setup() {
 
     if (roomColour == Black) {        //challenge or puzzle room
       myObjects.add(new Anventia(xx, yy));
-      myObjects.add(new Anventia(xx, yy));
-      myObjects.add(new Anventia(xx, yy));
-
-
+     
       myObjects.add(new Spawner(xx, yy));
       myObjects.add(new Spawner(xx, yy));
     }
@@ -334,12 +355,12 @@ void setup() {
       myObjects.add(new TP(xx, yy));
     }
 
-    if (roomColour == mapBlue) {        //final boss room
+    if (roomColour == mapBlue && !(myHero.roomX == 5 && myHero.roomY == 5)) {        //final boss room
       myObjects.add(new Dragon(xx, yy));
+      myObjects.add(new TP(6, 3));
     }
 
-    if (roomColour == mapAqua) {        //shopkeeper!
-      myObjects.add(new TP(xx, yy));
+    if (roomColour == mapAqua) {        //
     }
 
     //if((xx == 6 && yy == 3) || (xx == 8 && yy ==5)){
@@ -355,18 +376,5 @@ void setup() {
       yy++;
     }
   }
-}
-
-void draw() {
-  if (mode == INTRO) {
-    intro();
-  } else if (mode == GAME) {
-    game();
-  } else if (mode == PAUSE) {
-    pause();
-  } else if (mode == GAMEOVER) {
-    gameover();
-  } else {
-    println("Error: Mode =" + mode);
-  }
+  
 }

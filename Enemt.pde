@@ -2,6 +2,7 @@ class Enemy extends GameObject {
   int shotTimer;
   int threshold;
   PVector aimVector;
+  float scale;
 
 
   Enemy() {
@@ -11,6 +12,8 @@ class Enemy extends GameObject {
     //hp = 100;
     roomX = 1;
     roomY = 1;
+    scale = 50;
+    textSize(20);
   }
 
   Enemy (int aichpee, int s, int x, int y) {
@@ -23,6 +26,7 @@ class Enemy extends GameObject {
     size = s;
     roomX = x;
     roomY = y;
+    textSize(20);
   }
 
   void show() {
@@ -37,6 +41,8 @@ class Enemy extends GameObject {
 
   void act() {
     super.act();
+
+
 
 
     int i = 0;
@@ -172,6 +178,7 @@ class Anventia extends Enemy {
     xp = 10;
     AnventiaAction = GreenSlime;
     c = Green;
+    scale = 400;
   }
 
   void show() {
@@ -180,10 +187,20 @@ class Anventia extends Enemy {
     //circle(loc.x, loc.y, size);
 
     AnventiaAction.show(loc.x, loc.y-8, 1.4*size, 1.4*size);
+    noStroke();
+    fill(White);
+    rectMode(CORNER);
+    rect(loc.x-20, loc.y-40, 40, 20);
 
     fill(Black);
     textSize(20);
+
+    rectMode(CORNER);
+    fill(BrightGreen);
+    rect(loc.x-20, loc.y-40, (scale*hp)/100, 20);
+    fill(Black);
     text(hp, loc.x, loc.y-30);
+    rectMode(CENTER);
   }
 
   void act() {
@@ -217,9 +234,10 @@ class Shade extends Enemy {
     noStroke();
     fill(Black);
     circle(loc.x, loc.y, size);
-    fill(White);
-    textSize(20);
-    text(hp, loc.x, loc.y);
+    //fill(White);
+    //textSize(20);
+    //text(hp, loc.x, loc.y);
+    scale = 150;
   }
 
   void act() {
@@ -227,6 +245,17 @@ class Shade extends Enemy {
     vel = new PVector(myHero.loc.x - loc.x, myHero.loc.y - loc.y);
 
     if (dist(myHero.loc.x, myHero.loc.y, loc.x, loc.y) <= 150) {
+      noStroke();
+      fill(White);
+      rectMode(CORNER);
+      rect(loc.x-20, loc.y-50, 40, 20);
+      textSize(20);
+      rectMode(CORNER);
+      fill(BrightGreen);
+      rect(loc.x-20, loc.y-50, (scale*hp)/100, 20);
+      fill(Black);
+      text(hp, loc.x, loc.y-40);
+      rectMode(CENTER);
       vel.setMag(3);
     } else {
       vel.setMag(0);
@@ -251,7 +280,7 @@ class Turret extends Enemy {
     strokeWeight(2);
     fill(Steel);
     circle(loc.x, loc.y, size);
-    fill(Black);
+    fill(White);
     textSize(20);
     text(hp, loc.x, loc.y);
   }
@@ -264,7 +293,7 @@ class Turret extends Enemy {
     shotTimer++;
     if (shotTimer >= threshold) {
       aimVector = new PVector(myHero.loc.x-loc.x, myHero.loc.y-loc.y);
-      myObjects.add(new EnemyBullet(loc.x, loc.y, aimVector, Red, 10));
+      myObjects.add(new EnemyBullet(loc.x, loc.y, aimVector, Red, 10, false));
       //myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 10));
 
       shotTimer = 0;
@@ -295,59 +324,122 @@ class Spawner extends Enemy {
 class Dragon extends Enemy {    //boss
   int action;
   int actiontimer;
+  int shots, sh;
+  int floortimer;
+
+  AnimatedGIF DragonWalk;
+
 
   Dragon (int x, int y) {
-    super(750, 150, x, y);
-    threshold = 150;
-    xp = 300;
+    super(1000, 150, x, y);
+    actiontimer = 200;
+    threshold = 20;
+    xp = 500;
+    shots = 25;
+    sh = 0;
+    floortimer = 90;
+
+    c = Green;
+
+    DragonWalk = DragLeft;
   }
 
   void show() {
     stroke(Black);
     strokeWeight(3);
-    fill(#953708); //mahogany
-    square(loc.x, loc.y, size);
+    
+
+
+    DragonWalk.show(loc.x, loc.y, size, size);
+   
+    
+    //healthbar
+    rectMode(CORNER);
+    fill(White);
+    rect(50, 0, (hp*550)/(width), 30);
+    textSize(30);
     fill(Gray);
-    textSize(20);
-    text(hp, loc.x, loc.y);  //make hp bar later
+    text("Boss HP", width/2, 15);
+    
+    rectMode(CENTER);
+    
   }
 
 
   void act() {
     super.act();
 
-    if (actiontimer >= threshold) {
-      action = int(random(0, 4));
-      action = 1;
+    vel = new PVector(myHero.loc.x - loc.x, myHero.loc.y - loc.y);
+    vel.setMag(DRAGON_VEL);
+
+    if (abs(vel.y) > abs(vel.x)) {
+      if (vel.y > 0) {
+        DragonWalk = DragDown;
+      } else {
+        DragonWalk = DragUp;
+      }
     } else {
-      actiontimer++;
+      if (vel.x > 0) {
+        DragonWalk = DragRight;
+      } else {
+        DragonWalk = DragLeft;
+      }
+    }
+    
+    if (dist(loc.x, loc.y, myHero.loc.x, myHero.loc.y) <= size/2 + myHero.size/2 + 50){
+      vel.setMag(0);
+      
     }
 
-    switch (action) {
-    case 1:
-      FireBreath();
-      break;
 
-    case 2: 
-      Stomp();
-      break;
+
+    if (actiontimer == 400) {
+      action = int(random(0, 1));
+      println(action);
+
+      switch (action) {
+      case 0:
+        threshold = 10;
+        FireBreath();
+        break;
+
+      case 1: 
+        LavaCoat();
+        break;
+      }
+    } else {
+     
+      actiontimer++;
     }
   }
 
 
   void FireBreath() {
-    shotTimer++;
-    if (shotTimer >= threshold) {
-      aimVector = new PVector(myHero.loc.x-loc.x, myHero.loc.y-loc.y);
-      myObjects.add(new EnemyBullet(loc.x, loc.y, aimVector, Red, 10));
-      //myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Red, 10));
-
-      shotTimer = 0;
+    if (shots > 0) {
+      shotTimer++;
+      if (shotTimer >= threshold) {
+        shots--;
+        aimVector = new PVector(myHero.loc.x-loc.x, myHero.loc.y-loc.y);
+        myObjects.add(new EnemyBullet(loc.x, loc.y, aimVector, Red, 40, true));
+        shotTimer = 0;
+      }
+    } else {
+      actiontimer = 0;
+      sh++;
+      shots = 50 + sh;
     }
   }
 
 
-  void Stomp() {
+  void LavaCoat() {
+    floortimer--;
+    if (floortimer > 0) {
+      fill(Red);
+      circle(width/2, height/2, 200);
+    } else {
+      actiontimer = 0;
+      floortimer = 300;
+    }
   }
 }
 

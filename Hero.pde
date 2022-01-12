@@ -200,7 +200,7 @@ class Hero extends GameObject {
     skillTimer++;
     if (qkey && skillTimer >= 100) {
       myWeapon.skill();
-      myHero.hp -= int(myHero.hp*0.2);
+      if (!(shield >0))  myHero.hp -= int(myHero.hp*0.2);
       skillTimer = 0;
     }
 
@@ -234,11 +234,21 @@ class Hero extends GameObject {
             }
 
             if (myObj instanceof EnemyBullet) {
-              if (shield > 0 ) {
-                hp = hp - 2;
-              } else {
-                hp = hp - 5;
+              EnemyBullet blt = (EnemyBullet) myObj;
+
+              if (blt.boss == false) {
+                if (shield > 0 ) {
+                  hp = hp - 2;
+                } else {
+                  hp = hp - 5;
+                }
+              } else {          //BOSS STUFF
+                if (!(shield > 0 )) {
+                  hp = hp - 15;
+                  myHero.speed = myHero.scap*0.2;
+                }
               }
+
               myObj.hp = 0;
             }
 
@@ -281,15 +291,21 @@ class Hero extends GameObject {
       //TP===========
       if (myObj instanceof TP) { 
         TP portal = (TP) myObj;
-        portal.move(roomX, roomY);
-      } 
-
-
+        if ( !(myHero.roomX == 6) &&  !(myHero.roomY == 3)) {
+          portal.move();
+          portal.ogx = roomX;
+          portal.ogy = roomY;
+        } else {
+          portal.move();
+        }
+      }       
 
 
 
       i++;
     }
+
+
 
 
 
