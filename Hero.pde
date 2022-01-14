@@ -118,10 +118,10 @@ class Hero extends GameObject {
     }
 
     //testing 
-    if (bkey) {
-      roomX = 6;
-      roomY = 3;
-    }
+   // if (bkey) {
+   //   roomX = 6;
+   //   roomY = 3;
+   // }
 
 
 
