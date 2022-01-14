@@ -38,8 +38,8 @@ void drawRoom() {
   fill(Black);
   if (northRoom != White) {
     ellipse(width/2, height*0.1, 100, 100);
-    image(torch, width/2-58, height*0.05, 50, 50);
-    image(torch, width/2+58, height*0.05, 50, 50);
+    //image(torch, width/2-58, height*0.05, 50, 50);
+    //image(torch, width/2+58, height*0.05, 50, 50);
   }
 
   if (eastRoom != White) {
@@ -103,6 +103,19 @@ void drawGameObjects() {
         if (myObj instanceof Dragon ) {
           myHero.roomX = 1;
           myHero.roomY = 1;
+          reset++;
+
+          for (int b = 0; b < myObjects.size(); b++ ) {
+            GameObject myClear = myObjects.get(b);
+            if (myClear instanceof Enemy) {
+            }
+
+            if (myClear instanceof Particle) {
+              myClear.hp = 0;
+            }
+          }
+          
+          
           loadEnemies();
         }
         i--;
@@ -115,6 +128,7 @@ void drawGameObjects() {
 
 
 void drawLightLayer() {
+  if(!(myHero.roomX == 6 && myHero.roomY ==3))
   for (int i = 0; i < darkness.size(); i++) {
     DarknessCell myDark =  darkness.get(i);
     myDark.show();

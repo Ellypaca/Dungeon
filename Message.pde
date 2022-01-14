@@ -3,13 +3,13 @@ class Message extends GameObject {
   String text;
   float move;
 
-  Message(PVector l, String t, int s, int x, int y, color clr, float m) {
-    loc = l.copy();
+  Message(float x, float y, String t, int s, int rx, int ry, color clr, float m, int tim) {
+    loc =new PVector(x, y);
     text = t;
     size = s;
-    timer = 40;
-    roomX = x;
-    roomY = y;
+    timer = tim;
+    roomX = rx;
+    roomY = ry;
     c = clr;
     hp = 1;
     move = m;

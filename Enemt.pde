@@ -73,10 +73,10 @@ class Enemy extends GameObject {
           }
 
           if (hp<=0) {
-            if (xp != 0) { //spawned enemies give 0 exp
+            if (xp != 0 && xp !=500) { //spawned enemies give 0 exp
               myObjects.add(new DroppedW(loc.x, loc.y, roomX, roomY)); 
               myObjects.add(new DroppedHP(loc.x, loc.y, roomX, roomY));
-              myObjects.add(new Message (loc, "+"+xp, 50, roomX, roomY, White, 0.3));
+              myObjects.add(new Message (loc.x, loc.y, "+"+xp, 50, roomX, roomY, White, 0.3, 50));
 
               myHero.xp = myHero.xp + xp;
             }
@@ -197,7 +197,7 @@ class Anventia extends Enemy {
 
     rectMode(CORNER);
     fill(BrightGreen);
-    rect(loc.x-20, loc.y-40, (scale*hp)/100, 20);
+    rect(loc.x-20, loc.y-40, (scale*hp)/(100), 20);
     fill(Black);
     text(hp, loc.x, loc.y-30);
     rectMode(CENTER);
@@ -331,7 +331,7 @@ class Dragon extends Enemy {    //boss
 
 
   Dragon (int x, int y) {
-    super(1000, 150, x, y);
+    super(1000+250*reset, 150, x, y);
     actiontimer = 200;
     threshold = 20;
     xp = 500;
@@ -347,22 +347,21 @@ class Dragon extends Enemy {    //boss
   void show() {
     stroke(Black);
     strokeWeight(3);
-    
+
 
 
     DragonWalk.show(loc.x, loc.y, size, size);
-   
-    
+
+
     //healthbar
     rectMode(CORNER);
     fill(White);
-    rect(50, 0, (hp*550)/(width), 30);
+    rect(50, 0, (hp*550)/(width+250*reset), 30);
     textSize(30);
     fill(Gray);
     text("Boss HP", width/2, 15);
-    
+
     rectMode(CENTER);
-    
   }
 
 
@@ -385,30 +384,30 @@ class Dragon extends Enemy {    //boss
         DragonWalk = DragLeft;
       }
     }
-    
-    if (dist(loc.x, loc.y, myHero.loc.x, myHero.loc.y) <= size/2 + myHero.size/2 + 50){
+
+    if (dist(loc.x, loc.y, myHero.loc.x, myHero.loc.y) <= size/2 + myHero.size/2 + 50) {
       vel.setMag(0);
-      
     }
 
 
 
     if (actiontimer == 400) {
       action = int(random(0, 1));
-      println(action);
 
       switch (action) {
       case 0:
         threshold = 10;
         FireBreath();
+        //actiontimer++;
+
         break;
 
       case 1: 
         LavaCoat();
+     //   actiontimer++;
         break;
       }
     } else {
-     
       actiontimer++;
     }
   }
@@ -431,11 +430,11 @@ class Dragon extends Enemy {    //boss
   }
 
 
-  void LavaCoat() {
+  void LavaCoat() {//not working yet
     floortimer--;
     if (floortimer > 0) {
       fill(Red);
-      circle(width/2, height/2, 200);
+      circle(width/2, height/2, 400);
     } else {
       actiontimer = 0;
       floortimer = 300;

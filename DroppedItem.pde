@@ -5,7 +5,11 @@ class DroppedW extends GameObject {
 
   DroppedW(float x, float y, int rx, int ry) {
     type = GUN;
-    WeaponN = int(random(0, 4));
+    if (myHero.Magus == true) {
+      WeaponN = int(random(0, 4));
+    } else {
+      WeaponN = int(random(0, 3));
+    }
 
     switch (WeaponN) {
     case 0:
@@ -21,12 +25,14 @@ class DroppedW extends GameObject {
       break;
 
     case 3:
-      w = new Mage();
+      if (myHero.Magus == true) {
+        w = new Mage();
+      }
       break;
 
-    case 4:
-      w = new Pierce();
-      break;
+      //case 4:
+      //  w = new Pierce();
+      //  break;
     }
 
     hp = 1; 

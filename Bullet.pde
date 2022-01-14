@@ -70,7 +70,7 @@ class Bullet extends GameObject {
       
 
     case 3:
-      image(Arcane, 0, 0, size, size);
+    if(myHero.Magus = true) image(Arcane, 0, 0, size, size);
       break;
     }
     popMatrix();

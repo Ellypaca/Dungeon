@@ -126,7 +126,7 @@ color mapPurple = #621262;
 color mapGreen = #2d8e2a;
 color mapBlue = #1209f8;
 color mapOtherBlue = #4680d5; //used for rooms boss can go in
-color mapAqua = #00FFFB;
+color mapAqua = #00fcf7;
 
 //FONTS
 PFont USA, USR;
@@ -155,8 +155,10 @@ AnimatedGIF DragUp, DragDown, DragLeft, DragRight;
 
 
 //SPRITES
-PImage torch;
+
+//PImage torch;
 AnimatedGIF portal;
+PImage NPC;
 
 //bullets
 PImage AOEBullet, Arrow, Arcane, LS;
@@ -165,7 +167,9 @@ PImage AOEBullet, Arrow, Arcane, LS;
 ArrayList<GameObject> myObjects;
 Hero myHero;
 
-//final int 
+
+//for difficulty
+int reset;
 
 
 //DARKNESS
@@ -253,8 +257,9 @@ void setup() {
 
 
   //Sprites
-  torch = loadImage("data/Other Assets/SmallTorch.png");
+  //torch = loadImage("data/Other Assets/SmallTorch.png");
   portal = new AnimatedGIF(3, 10, "data/Other Assets/hole_", ".png");
+  NPC = loadImage("data/Shopkeeper.png");
 
 
 
@@ -262,7 +267,7 @@ void setup() {
   myHero = new Hero();
   myObjects = new ArrayList<GameObject>(1000);
   myObjects.add(myHero);
-  
+
 
 
 
@@ -291,7 +296,6 @@ void setup() {
 
   //loading enemies from  map===============
   loadEnemies();
-  
 }
 
 void draw() {
@@ -310,7 +314,7 @@ void draw() {
 
 
 
-void loadEnemies(){
+void loadEnemies() {
   int xx = 0;
   int yy = 0;
   while (yy < map.height) {
@@ -346,7 +350,7 @@ void loadEnemies(){
 
     if (roomColour == Black) {        //challenge or puzzle room
       myObjects.add(new Anventia(xx, yy));
-     
+
       myObjects.add(new Spawner(xx, yy));
       myObjects.add(new Spawner(xx, yy));
     }
@@ -357,10 +361,12 @@ void loadEnemies(){
 
     if (roomColour == mapBlue && !(myHero.roomX == 5 && myHero.roomY == 5)) {        //final boss room
       myObjects.add(new Dragon(xx, yy));
-      myObjects.add(new TP(6, 3));
     }
 
     if (roomColour == mapAqua) {        //
+      myObjects.add(new Shopkeeper(xx, yy));
+      myObjects.add(new TP(xx, yy));
+
     }
 
     //if((xx == 6 && yy == 3) || (xx == 8 && yy ==5)){
@@ -376,5 +382,4 @@ void loadEnemies(){
       yy++;
     }
   }
-  
 }

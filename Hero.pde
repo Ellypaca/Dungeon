@@ -8,6 +8,8 @@ class Hero extends GameObject {
   float scap;
   int skillTimer;
   Weapon myWeapon;
+  
+  boolean Magus;
 
   Hero() {
     super();
@@ -15,12 +17,13 @@ class Hero extends GameObject {
     roomX = 1;
     roomY = 1;
     size = 40.0;
-    myWeapon = new Mage(); //Bow, mage, AOE, wifesteal
+    myWeapon = new Bow(); //Bow, mage, AOE, wifesteal
     clr= BrightGreen;
     invinTimer = 60;
     currentAction = manDown;
     DefaultAction = ManU;
     lvlpoints = 5;
+    Magus = false;
 
     //health
     hpcap = HP_CAP;
@@ -116,8 +119,8 @@ class Hero extends GameObject {
 
     //testing 
     if (bkey) {
-      roomX = 5;
-      roomY = 5;
+      roomX = 6;
+      roomY = 3;
     }
 
 
