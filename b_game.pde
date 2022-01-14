@@ -103,19 +103,19 @@ void drawGameObjects() {
         if (myObj instanceof Dragon ) {
           myHero.roomX = 1;
           myHero.roomY = 1;
-          reset++;
 
           for (int b = 0; b < myObjects.size(); b++ ) {
             GameObject myClear = myObjects.get(b);
             if (myClear instanceof Enemy) {
-            }
-
-            if (myClear instanceof Particle) {
+              myClear.hp = 0;
+            } else if (myClear instanceof Particle) {
               myClear.hp = 0;
             }
           }
-          
-          
+
+          reset++;
+
+
           loadEnemies();
         }
         i--;
@@ -128,11 +128,11 @@ void drawGameObjects() {
 
 
 void drawLightLayer() {
-  if(!(myHero.roomX == 6 && myHero.roomY ==3))
-  for (int i = 0; i < darkness.size(); i++) {
-    DarknessCell myDark =  darkness.get(i);
-    myDark.show();
-  }
+  if (!(myHero.roomX == 6 && myHero.roomY ==3))
+    for (int i = 0; i < darkness.size(); i++) {
+      DarknessCell myDark =  darkness.get(i);
+      myDark.show();
+    }
 }
 
 

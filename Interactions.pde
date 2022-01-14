@@ -10,11 +10,9 @@ void mousePressed() {
       mode = GAME;
     }
   } else if (mode == GAMEOVER) {
-    boolean unlock = myHero.Magus;
     mode = INTRO;
     setup();
     draw();
-    myHero.Magus = unlock;
   }
 }
 

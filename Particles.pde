@@ -1,7 +1,7 @@
 class Particle extends GameObject {
   int t; //transparency
 
-  Particle(float x, float y, float vx, float vy, int rx, int ry, int s, color clr) {
+   (float x, float y, float vx, float vy, int rx, int ry, int s, color clr) {
     hp = 60;
     size = s;
     t = int(random(200, 255));

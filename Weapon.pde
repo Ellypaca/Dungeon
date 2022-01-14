@@ -1,10 +1,11 @@
 class Weapon {
   PVector vel;
   int shotTimer, threshold;
-  int bulletSpeed;
+  float bulletSpeed;
   PVector loc; //location
   PVector aimVector;
   int WeaponNum;
+  int dmg;
 
   Weapon() {
     shotTimer = 0;
@@ -42,13 +43,40 @@ class Weapon {
       shotTimer = 0;
     }
   }
+
+  void skill() { 
+    int WeaponN = int(random(0, 4));
+
+    switch (WeaponN) {
+    case 0:
+      myHero.myWeapon = new Bow();
+      break;
+
+    case 1:
+      myHero.myWeapon = new AOE();
+      break;
+
+    case 2:
+      myHero.myWeapon = new Wifesteal();
+      break;
+
+    case 3:
+      if (myHero.Magus == true) myHero.myWeapon = new Mage();
+      break;
+
+    case 4:
+      myHero.myWeapon = new Pierce();
+      break;
+    }
+  }
 }
 
 
-class Bow extends Weapon {           //make it accelerate
+class Bow extends Weapon {     //make it accelerate
   Bow() {
     super(BOW_THR, BOW_VEL);
     WeaponNum = 0;
+    dmg = BOW_VEL;
   }
 
   void shoot() {
@@ -61,35 +89,6 @@ class Bow extends Weapon {           //make it accelerate
   }
 }
 
-class Mage extends Weapon {
-  Mage() {
-    super(MAGE_THR, MAGE_VEL);
-  }
-
-  void shoot() {
-    if (shotTimer >= threshold ) {
-      for (int i = 0; i<3; i++) {
-        aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
-        aimVector.rotate(random(-0.5, 0.5));
-        aimVector.setMag(bulletSpeed);
-        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, MAGE_BULLET_S));
-        shotTimer = 0;
-      }
-    }
-  }
-}
-
-
-//class Sword extends Weapon {
-//  Sword(){
-//   super() 
-//  }
-
-
-
-//}
-
-
 class AOE extends Weapon {
   int r;
 
@@ -97,6 +96,7 @@ class AOE extends Weapon {
     super(AOE_THR, AOE_VEL);
     r = -10;
     WeaponNum = 1;
+    dmg = AOE_VEL;
   }
 
   void shoot() {
@@ -120,6 +120,7 @@ class Wifesteal extends Weapon {
   Wifesteal() {
     super(WIFESTEAL_THR, WIFESTEAL_VEL);
     WeaponNum= 2;
+    dmg = WIFESTEAL_VEL;
   }
 
   void shoot() {
@@ -133,6 +134,59 @@ class Wifesteal extends Weapon {
     }
   }
 }
+
+
+
+class Mage extends Weapon {
+  Mage() {
+    super(MAGE_THR, MAGE_VEL);
+    dmg = MAGE_VEL;
+    WeaponNum = 3;
+  }
+
+  void shoot() {
+    if (shotTimer >= threshold ) {
+      myHero.speed = myHero.scap*0.3;
+
+
+      for (int i = 0; i<3; i++) {
+        aimVector = new PVector(mouseX-myHero.loc.x, mouseY-myHero.loc.y);
+        aimVector.rotate(random(-0.5, 0.5));
+        aimVector.setMag(bulletSpeed);
+        myObjects.add(new Bullet(myHero.loc.x, myHero.loc.y, aimVector, Yellow, MAGE_BULLET_S));
+        shotTimer = 0;
+      }
+    }
+  }
+}
+
+class Pierce extends Weapon {
+  Pierce() {
+    super();
+    WeaponNum = 4;
+    dmg = PIERCE_VEL;
+  }
+}
+
+
+//class Skill extends GameObject {
+//  Skill(int rx, int ry) {
+//    rx = roomX;
+//    ry = roomY;
+//  }
+
+//  void show() {
+//    image(Target, myHero.loc.x, myHero.loc.y);
+//  }
+
+//  void act () {
+//  }
+//}
+
+
+
+
+
 
 
 
@@ -153,9 +207,9 @@ class Wifesteal extends Weapon {
 //      //instead of bullet
 //      myHero.loc = new PVector(mouseX, mouseY);
 //      //if (dist(myHero.loc.x, myHero.loc.y, Enemy.loc.x, Enemy.loc.y) <= 10){
-        
+
 //      //}
-      
+
 
 //      shotTimer = 0;
 //    }
